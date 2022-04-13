@@ -6,6 +6,13 @@ const Dashboard = (props)=>{
     const [query, setQuery] = useState('')
     const [loggedIn, setLoggedIn] = useState(false)
     const [data,setData] = useState(null)
+    const [timeFrame, setTimeFrame] = useState('1D')
+
+    useEffect (()=>{
+        if(stock != ''){
+            getStockData()
+        }
+      }, [stock,timeFrame])
     
       
     useEffect (()=>{
@@ -30,6 +37,29 @@ const Dashboard = (props)=>{
         setStock(query)
     }
 
+    async function getStockData(){
+        const options = {
+            method: 'GET',
+            url: 'https://alpha.financeapi.net/symbol/get-chart',
+            params: {symbol: `${stock}`, period: `${timeFrame}`},
+            headers: {
+                'accept': 'application/json',
+                'X-API-KEY': 'BybMqRx5Zt5ZMW0gRC96O11Qpvh3mNEf3MJ5LTK5'
+            }
+          };
+        let response
+        try{
+            response = await axios.request(options)
+        }catch(err){
+            console.log(err)
+        }
+        setData(response)
+
+    }
+    const udpateTimeFrame = (e)=>{
+        e.preventDefault()
+        setTimeFrame(e.target.value)
+    }
 
     return (
        
@@ -45,9 +75,17 @@ const Dashboard = (props)=>{
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
-                    {stock &&
+                    {data &&
                         <div>
-                            <Chart stock = {stock} />
+                            <select onChange={udpateTimeFrame}>
+                                <option selected value = "1D">1D</option>
+                                <option value="5D">5D</option>
+                                <option value="1M">1M</option>
+                                <option value="3M">3M</option>
+                                <option value="1Y">1Y</option>
+                                <option value= "MAX">MAX</option>
+                            </select>
+                            <Chart stock = {stock} data = {data.data.attributes}/>
                         </div>
                     }
                 </div>
