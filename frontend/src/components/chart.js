@@ -4,11 +4,7 @@ import {Chart as ChartJS} from 'chart.js/auto'
 import axios from 'axios'
 const Chart = (props) =>{
     const [closingValues, setClosingValues] = useState([])
-    const [timeFrame, setTimeFrame] = useState('1Y')
-    const [cache,setCache] = useState([])
 
-    useEffect(()=>{
-    },[timeFrame])
 
     useEffect (()=>{
         setClosingValues([])
@@ -31,8 +27,10 @@ const Chart = (props) =>{
         console.log("Here is the data")
         console.log(props.data)
         let data = props.data
-        Object.entries(props.data).forEach((date)=>{
+
+        Object.entries(props.data.attributes).sort().forEach((date)=>{
             setClosingValues(closingValues=>([...closingValues,date[1].close]))
+
         })
     }
     const options = {

@@ -19,6 +19,10 @@ const UserSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  buyingPower:{
+    type: Number,
+    default: 10000
+  },
   createdAt: {
     type: Date,
     default: Date.now,

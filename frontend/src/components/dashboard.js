@@ -6,13 +6,17 @@ const Dashboard = (props)=>{
     const [query, setQuery] = useState('')
     const [loggedIn, setLoggedIn] = useState(false)
     const [data,setData] = useState(null)
-    const [timeFrame, setTimeFrame] = useState('1D')
+    const [timeFrame, setTimeFrame] = useState('MAX')
+    
+    
 
     useEffect (()=>{
         if(stock != ''){
             getStockData()
         }
       }, [stock,timeFrame])
+
+
     
       
     useEffect (()=>{
@@ -78,14 +82,14 @@ const Dashboard = (props)=>{
                     {data &&
                         <div>
                             <select onChange={udpateTimeFrame}>
-                                <option selected value = "1D">1D</option>
+                                <option value = "1D">1D</option>
                                 <option value="5D">5D</option>
                                 <option value="1M">1M</option>
                                 <option value="3M">3M</option>
                                 <option value="1Y">1Y</option>
-                                <option value= "MAX">MAX</option>
+                                <option selected value= "MAX">MAX</option>
                             </select>
-                            <Chart stock = {stock} data = {data.data.attributes}/>
+                            <Chart stock = {stock} data = {data.data} timeFrame = {timeFrame}/>
                         </div>
                     }
                 </div>
