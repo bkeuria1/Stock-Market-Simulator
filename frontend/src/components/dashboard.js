@@ -1,14 +1,14 @@
-import {React,useState,useEffect} from 'react'
+import {React,useState,useEffect,createContext } from 'react'
 import axios from 'axios'
 import Chart from './chart'
+import { StockContext } from '../context/stockContext'
 const Dashboard = (props)=>{
     const [stock, setStock] = useState('')
     const [query, setQuery] = useState('')
     const [loggedIn, setLoggedIn] = useState(false)
     const [data,setData] = useState(null)
-    const [timeFrame, setTimeFrame] = useState('MAX')
-    
-    
+    const [timeFrame, setTimeFrame] = useState('1D')
+
 
     useEffect (()=>{
         if(stock != ''){
@@ -89,7 +89,9 @@ const Dashboard = (props)=>{
                                 <option value="1Y">1Y</option>
                                 <option selected value= "MAX">MAX</option>
                             </select>
-                            <Chart stock = {stock} data = {data.data} timeFrame = {timeFrame}/>
+                            <StockContext.Provider value={stock}>
+                                <Chart stock = {stock} data = {data.data} timeFrame = {timeFrame}/>
+                            </StockContext.Provider>
                         </div>
                     }
                 </div>
