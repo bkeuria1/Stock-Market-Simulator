@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   },
   buyingPower:{
     type: Number,
-    default: 10000
+    default: 1000000
   },
   createdAt: {
     type: Date,
@@ -29,4 +29,4 @@ const UserSchema = new mongoose.Schema({
   },
 })
 
-module.exports = mongoose.model('user', UserSchema)
+module.exports = mongoose.model('User', UserSchema)

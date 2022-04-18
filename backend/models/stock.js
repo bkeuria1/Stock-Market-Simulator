@@ -4,15 +4,18 @@ const stockSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    profits:{
-        type:number,
-        //required:true
-    },
-    averagePurchasePrice:{
-        type:number
+
+    date: {
+        type: Date,
+        default: Date.now(),
+      },
+   
+    total:{
+        type:Number,
+        default:0
     },
     quantity:{
-        type:number,
+        type:Number,
         default:0
     },
     user:{
@@ -21,6 +24,6 @@ const stockSchema = new mongoose.Schema({
         required : true
     }   
 })
-
+// stockSchema.index({ticker:1, user:1},{unique:true})
 module.exports = mongoose.model('Stock',stockSchema);
 

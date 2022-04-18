@@ -7,8 +7,10 @@ const bodyParser = require('body-parser')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')
 const passport = require('passport')
-const stockRouter = require('./routes/stocks')
+const saleRouter = require('./routes/sale')
 const authRouter = require('./routes/auth')
+const userRouter = require('./routes/user')
+const stockRouter = require('./routes/stock')
 
 require('./passport')(passport)
 let whitelist = ['http://localhost:3000','http://localhost:3000/new']
@@ -18,18 +20,6 @@ let corsOptions = {
   credentials:true
 }
 app.use(cors(corsOptions))
-// app.use(cors({
-//   credentials: true,
-//    origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }, // <-- location of the react app were connecting to
-  
-// }))
-
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, 
   { useNewUrlParser: true,
@@ -58,5 +48,7 @@ app.use(logger('tiny'))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/auth', authRouter)
-app.use('/stocks', stockRouter)
+app.use('/sale', saleRouter)
+app.use('/user', userRouter)
+app.use('/stock',stockRouter)
 app.listen(process.env.PORT || 3001)
