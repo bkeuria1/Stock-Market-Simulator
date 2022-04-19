@@ -79,7 +79,7 @@ const Chart = (props) =>{
 
             {Object.keys(closingValues).length>0 &&
                 <div>
-                    <BuySellForm currentPrice = {closingValues.slice(-1)}></BuySellForm>
+                    <BuySellForm currentPrice = {currentPrice}></BuySellForm>
                     <Line data = {chartData} options = {options}/>
                 </div>
             }

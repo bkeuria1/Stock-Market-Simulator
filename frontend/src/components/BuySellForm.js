@@ -1,13 +1,16 @@
 import React, {useState,useEffect,useContext} from 'react'
 import axios from 'axios';
 import { StockContext } from '../context/stockContext';
-const BuySellForm = ()=>{
+const BuySellForm = (props)=>{
     const [quantity,setQuantity] = useState(0)
     const [currentPrice, setCurrentPrice] = useState(0)
     const [total, setTotal] = useState(0);
     const stock = useContext(StockContext)
 
-    
+    useEffect(()=>{
+      setTotal(quantity*props.currentPrice)
+    },[quantity])
+
     const buyStock = async (e)=>{
   
       e.preventDefault()
@@ -26,6 +29,7 @@ const BuySellForm = ()=>{
     const updateQuanity = (e)=>{
       e.preventDefault()
       setQuantity(e.target.value)
+      console.log(total)
     }
     return(
        <div>
