@@ -16,9 +16,12 @@ const BuySellForm = (props)=>{
       e.preventDefault()
       const savedStock = {
         ticker: stock,
-        total: total
+        quantity: quantity,
+        total: total,
+
       }
-      await axios.post("http://localhost:3001/stocks/buy", {},{withCredentials:true})
+      const res = await axios.post("http://localhost:3001/sale/buy", savedStock,{withCredentials:true})
+      console.log(res)
       
 
     }

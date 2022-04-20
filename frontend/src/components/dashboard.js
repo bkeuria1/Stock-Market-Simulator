@@ -8,6 +8,7 @@ const Dashboard = (props)=>{
     const [loggedIn, setLoggedIn] = useState(false)
     const [data,setData] = useState(null)
     const [timeFrame, setTimeFrame] = useState('1D')
+    const [buyingPower,setBuyingPower] = useState(0)
 
 
     useEffect (()=>{
@@ -17,7 +18,9 @@ const Dashboard = (props)=>{
       }, [stock,timeFrame])
 
 
-    
+    useEffect(()=>{
+        getBuyingPower()
+    })
       
     useEffect (()=>{
         checkLogin()
@@ -60,6 +63,11 @@ const Dashboard = (props)=>{
         setData(response)
 
     }
+
+    const getBuyingPower = async(e)=>{
+        const res = await axios.get('http://localhost:3001/user/buyingPower', {withCredentials:true})
+        setBuyingPower(res.data.buyingPower)
+    }
     const udpateTimeFrame = (e)=>{
         e.preventDefault()
         setTimeFrame(e.target.value)
@@ -79,6 +87,7 @@ const Dashboard = (props)=>{
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
+                    <h2>Buying Power: {buyingPower.toFixed(2)}</h2>
                     {data &&
                         <div>
                             <select onChange={udpateTimeFrame}>
