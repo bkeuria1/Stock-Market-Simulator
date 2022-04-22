@@ -19,16 +19,22 @@ router.get('/symbol/chart', ensureAuth,(req, res) => {
     stock.user = user
     if(buyingPower<total){
       res.status(400).send("You Dont have enough buying power")
+      return
     }
     try{
-      console.log(req.body)
-      const saveStockRes = await stock.save()
-      user.buyingPower -=total
+      const currentStock = await Stock.findOne({user:req.user, ticker:req.body.ticker})
+      if(currentStock){
+        currentStock.quantity += req.body.quantity
+        currentStock.total += req.body.total
+        currentStock.save()
+      }else{
+        stock.save()
+      }
+      
+      user.buyingPower -= total
       await user.save()
-      console.log(user.buyingPower)
       res.status(200).send("Purchase is Completed")
     }catch(err){
-      console.log(err)
       res.status(400).send("There was an error with your purchase")
     }
     

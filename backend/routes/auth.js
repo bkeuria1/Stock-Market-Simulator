@@ -35,13 +35,4 @@ router.get('/logout', ensureAuth, (req, res) => {
     
 })
 
-router.get('/cash', ensureAuth,(req,res)=>{
-  try{
-    res.send({cash: req.user.buyingPower})
-  }catch(err){
-    console.log(err)
-    res.send(err)
-  }
-})
-
 module.exports = router

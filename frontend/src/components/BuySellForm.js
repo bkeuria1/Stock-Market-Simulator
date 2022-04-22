@@ -9,6 +9,7 @@ const BuySellForm = (props)=>{
 
     useEffect(()=>{
       setTotal(quantity*props.currentPrice)
+      console.log(typeof quantity)
     },[quantity])
 
     const buyStock = async (e)=>{
@@ -16,8 +17,8 @@ const BuySellForm = (props)=>{
       e.preventDefault()
       const savedStock = {
         ticker: stock,
-        quantity: quantity,
-        total: total,
+        quantity: parseInt(quantity),
+        total: parseInt(total),
 
       }
       const res = await axios.post("http://localhost:3001/sale/buy", savedStock,{withCredentials:true})
@@ -32,7 +33,7 @@ const BuySellForm = (props)=>{
     const updateQuanity = (e)=>{
       e.preventDefault()
       setQuantity(e.target.value)
-      console.log(total)
+
     }
     return(
        <div>

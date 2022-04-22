@@ -72,6 +72,9 @@ const Dashboard = (props)=>{
         e.preventDefault()
         setTimeFrame(e.target.value)
     }
+    const reset = async(e)=>{
+        axios.post("http://localhost:3001/user/reset", {},{withCredentials:true})
+    }
 
     return (
        
@@ -79,6 +82,7 @@ const Dashboard = (props)=>{
             {loggedIn ?
                 <div>
                 <a href = {process.env.REACT_APP_SIGN_OUT_URL} class = "btn btn-danger">Log Out</a>
+                <a href = {process.env.REACT_APP_RESET_PROFILE_URL} class = "btn btn-danger">Reset Profile</a>
                 <form class="input-group" onSubmit= {updateStock}>
                     <div class="form-outline">
                         <input type="text" class="search-bar" placeholder = "Search for a Stock" onChange={updateQuery}  value = {query}/>

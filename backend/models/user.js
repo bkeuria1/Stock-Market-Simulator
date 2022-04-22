@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   },
   buyingPower:{
     type: Number,
-    default: 10000
+    default: 1000000
   },
   createdAt: {
     type: Date,
