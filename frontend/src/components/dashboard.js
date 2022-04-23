@@ -20,7 +20,7 @@ const Dashboard = (props)=>{
 
     useEffect(()=>{
         getBuyingPower()
-    })
+    },[])
       
     useEffect (()=>{
         checkLogin()
@@ -73,7 +73,7 @@ const Dashboard = (props)=>{
         setTimeFrame(e.target.value)
     }
     const reset = async(e)=>{
-        axios.post("http://localhost:3001/user/reset", {},{withCredentials:true})
+        axios.get("http://localhost:3001/user/reset",{withCredentials:true})
     }
 
     return (
@@ -95,12 +95,12 @@ const Dashboard = (props)=>{
                     {data &&
                         <div>
                             <select onChange={udpateTimeFrame}>
-                                <option value = "1D">1D</option>
+                                <option selected value = "1D">1D</option>
                                 <option value="5D">5D</option>
                                 <option value="1M">1M</option>
                                 <option value="3M">3M</option>
                                 <option value="1Y">1Y</option>
-                                <option selected value= "MAX">MAX</option>
+                                <option value= "MAX">MAX</option>
                             </select>
                             <StockContext.Provider value={stock}>
                                 <Chart stock = {stock} data = {data.data} timeFrame = {timeFrame}/>

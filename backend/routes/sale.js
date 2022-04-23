@@ -18,8 +18,8 @@ router.get('/symbol/chart', ensureAuth,(req, res) => {
     let stock = new Stock(req.body)
     stock.user = user
     if(buyingPower<total){
-      res.status(400).send("You Dont have enough buying power")
-      return
+      return res.status(400).send()
+
     }
     try{
       const currentStock = await Stock.findOne({user:req.user, ticker:req.body.ticker})
@@ -38,6 +38,10 @@ router.get('/symbol/chart', ensureAuth,(req, res) => {
       res.status(400).send("There was an error with your purchase")
     }
     
+    
+  })
+
+  router.patch('/sell', ensureAuth, async(req,res)=>{
     
   })
 
