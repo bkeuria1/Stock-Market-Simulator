@@ -27,7 +27,7 @@ const Dashboard = (props)=>{
     },[loggedIn])
     
     async function checkLogin(){
-      const result = await axios.get( 'http://localhost:3001/auth/loggedIn', {withCredentials:true})
+      const result = await axios.get( 'http://localhost:3001/auth/loggedIn',  {withCredentials:true})
       if(result.data.result){
         setLoggedIn(true)
         return
@@ -45,23 +45,13 @@ const Dashboard = (props)=>{
     }
 
     async function getStockData(){
-        const options = {
-            method: 'GET',
-            url: 'https://alpha.financeapi.net/symbol/get-chart',
-            params: {symbol: `${stock}`, period: `${timeFrame}`},
-            headers: {
-                'accept': 'application/json',
-                'X-API-KEY': 'BybMqRx5Zt5ZMW0gRC96O11Qpvh3mNEf3MJ5LTK5'
-            }
-          };
         let response
         try{
-            response = await axios.request(options)
+            response = await axios.get(`http://localhost:3001/stock/chart?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
         }catch(err){
             console.log(err)
         }
         setData(response)
-
     }
 
     const getBuyingPower = async(e)=>{

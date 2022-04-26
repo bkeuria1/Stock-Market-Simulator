@@ -42,16 +42,7 @@ const Chart = (props) =>{
         setDates(tempDates)
     }
     async function getCurrentPrice(){
-        const options = {
-            method: 'GET',
-            url: 'https://alpha.financeapi.net/market/get-realtime-prices',
-            params: {symbols: `${stock}`},
-            headers: {
-                'accept': 'application/json',
-                'X-API-KEY': 'BybMqRx5Zt5ZMW0gRC96O11Qpvh3mNEf3MJ5LTK5'
-            }
-          };
-          const res = await axios.request(options)
+          const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock = ${stock}`,{withCredentials:true})
           console.log(stock)
           console.log(res)
           setCurrentPrice(res.data.data[0].attributes.last)
@@ -65,13 +56,6 @@ const Chart = (props) =>{
             }
         }
     }
-
-    function showClosingValues(){
-        for(const i in closingValues){
-            console.log(i + closingValues[i])
-        }
-    }
-
     return(
         <div>
             <h1>{props.stock}</h1>
