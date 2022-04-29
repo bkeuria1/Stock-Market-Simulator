@@ -41,10 +41,8 @@ const Chart = (props) =>{
         setClosingValues(tempValues)
         setDates(tempDates)
     }
-    async function getCurrentPrice(){
-          const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock = ${stock}`,{withCredentials:true})
-          console.log(stock)
-          console.log(res)
+    const getCurrentPrice = async()=>{
+          const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${stock}`,{withCredentials:true})
           setCurrentPrice(res.data.data[0].attributes.last)
     }
     const options = {
@@ -58,7 +56,7 @@ const Chart = (props) =>{
     }
     return(
         <div>
-            <h1>{props.stock}</h1>
+            <h1>{stock}</h1>
             <h3>Current price: {currentPrice}</h3>
 
             {Object.keys(closingValues).length>0 &&

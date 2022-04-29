@@ -35,10 +35,9 @@ router.get('/realtimePrice',ensureAuth, async(req,res)=>{
     const url = `https://alpha.financeapi.net/market/get-realtime-prices?symbols=${req.query.stock}`
     try{
         const results = await axios.get(url,options)
-        console.log(results)
         res.send(results.data)
     }catch(err){
-        console.log(err)
+        //console.log(err)
         res.status(400).send()
     }
 })

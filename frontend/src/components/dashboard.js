@@ -2,6 +2,7 @@ import {React,useState,useEffect,createContext } from 'react'
 import axios from 'axios'
 import Chart from './chart'
 import { StockContext } from '../context/stockContext'
+import SummaryTable from './summaryTable'
 const Dashboard = (props)=>{
     const [stock, setStock] = useState('')
     const [query, setQuery] = useState('')
@@ -70,33 +71,41 @@ const Dashboard = (props)=>{
        
         <div>
             {loggedIn ?
+
+    
+
                 <div>
-                <a href = {process.env.REACT_APP_SIGN_OUT_URL} class = "btn btn-danger">Log Out</a>
-                <a href = {process.env.REACT_APP_RESET_PROFILE_URL} class = "btn btn-danger">Reset Profile</a>
-                <form class="input-group" onSubmit= {updateStock}>
-                    <div class="form-outline">
-                        <input type="text" class="search-bar" placeholder = "Search for a Stock" onChange={updateQuery}  value = {query}/>
-                    </div>
-                    <button id="search-button" type="submit" class="btn btn-primary">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </form>
-                    <h2>Buying Power: {buyingPower.toFixed(2)}</h2>
-                    {data &&
-                        <div>
-                            <select onChange={udpateTimeFrame}>
-                                <option selected value = "1D">1D</option>
-                                <option value="5D">5D</option>
-                                <option value="1M">1M</option>
-                                <option value="3M">3M</option>
-                                <option value="1Y">1Y</option>
-                                <option value= "MAX">MAX</option>
-                            </select>
-                            <StockContext.Provider value={stock}>
-                                <Chart stock = {stock} data = {data.data} timeFrame = {timeFrame}/>
-                            </StockContext.Provider>
+                    
+                    <a href = {process.env.REACT_APP_SIGN_OUT_URL} class = "btn btn-danger">Log Out</a>
+                    <a href = {process.env.REACT_APP_RESET_PROFILE_URL} class = "btn btn-danger">Reset Profile</a>
+                    <form class="input-group" onSubmit= {updateStock}>
+                        <div class="form-outline">
+                            <input type="text" class="search-bar" placeholder = "Search for a Stock" onChange={updateQuery}  value = {query}/>
                         </div>
-                    }
+                        <button id="search-button" type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                        <h2>Buying Power: {buyingPower.toFixed(2)}</h2>
+                        {data &&
+                            <div>
+                                <select onChange={udpateTimeFrame}>
+                                    <option selected value = "1D">1D</option>
+                                    <option value="5D">5D</option>
+                                    <option value="1M">1M</option>
+                                    <option value="3M">3M</option>
+                                    <option value="1Y">1Y</option>
+                                    <option value= "MAX">MAX</option>
+                                </select>
+                                <StockContext.Provider value={stock}>
+                                    <Chart stock = {stock} data = {data.data} timeFrame = {timeFrame}/>
+                                </StockContext.Provider>
+                                
+                            
+                            </div>
+                        }
+                         <SummaryTable></SummaryTable>
+                    
                 </div>
                
                 :

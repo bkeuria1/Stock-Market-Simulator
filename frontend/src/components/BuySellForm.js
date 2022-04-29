@@ -3,13 +3,15 @@ import axios from 'axios';
 import { StockContext } from '../context/stockContext';
 const BuySellForm = (props)=>{
     const [quantity,setQuantity] = useState(0)
-    const [currentPrice, setCurrentPrice] = useState(0)
     const [total, setTotal] = useState(0);
     const [sell, setSell] = useState(false)
     const [show,setShow] = useState(false)
     const [messageContent, setMessageContent] = useState({message:'', class:''})
     const stock = useContext(StockContext)
-
+    useEffect(()=>{
+      ownsStock()
+      setSell(false)
+    },[stock])
     useEffect(()=>{
       setTotal(quantity*props.currentPrice)
     },[quantity])
@@ -38,9 +40,15 @@ const BuySellForm = (props)=>{
       }
       let res
       let updatedMessage
+      if(quantity<=0){
+        updatedMessage = { message :`Invalid Number: Please Enter a number greater than 0`,class: 'alert alert-danger'}
+      }
       try{
+        if(quantity<=0){
+          updatedMessage = { message :`Invalid Number: Please Enter a number greater than 0`,class: 'alert alert-danger'}
+        }
       
-        if(e.target.id === 'buy'){
+         else if(e.target.id === 'buy'){
           res = await axios.post("http://localhost:3001/sale/buy", targetStock,{withCredentials:true})
           updatedMessage = { message :`Your purchase of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
         }else if(e.target.id === 'sell'){
@@ -56,14 +64,24 @@ const BuySellForm = (props)=>{
       setMessageContent(updatedMessage)
       setShow(true)
     }
-    const sellStock = (e)=>{
-      e.preventDefault()
-    }
-    
+  
     const updateQuanity = (e)=>{
       e.preventDefault()
       setQuantity(e.target.value)
 
+    }
+
+    const ownsStock = async()=>{
+      const res = await axios.get("http://localhost:3001/stock/userStocks",{withCredentials:true})
+      console.log(res.data)
+      res.data.forEach(ownedStock => {
+        console.log(stock.ticker, stock)
+
+        if(ownedStock.ticker === stock){
+          console.log("found")
+          setSell(true)
+        }
+      });
     }
     return(
       
@@ -76,7 +94,9 @@ const BuySellForm = (props)=>{
               <input class="form-control"  type='number' id = 'buyForm' onChange = {updateQuanity} value = {quantity} ></input>
               <label>Total Cost:{total}</label>
           <button id = 'buy' onClick = {buyStock} class = 'btn btn-primary'>Buy {stock}</button>
-          <button id = 'sell' onClick = {buyStock} class = 'btn btn-danger'>Sell {stock}</button>
+          {sell &&
+            <button id = 'sell' onClick = {buyStock} class = 'btn btn-danger'>Sell {stock}</button>
+          }
         </div>
         </form>
 
