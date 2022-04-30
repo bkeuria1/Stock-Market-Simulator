@@ -39,7 +39,6 @@ router.post('/buy', ensureAuth,async(req,res)=>{
 })
 
 router.patch('/sell', ensureAuth, async(req,res)=>{
-  console.log("hello")
   const user = req.user
   
   try{

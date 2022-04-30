@@ -30,8 +30,6 @@ const Chart = (props) =>{
     function parseData(){
         let tempValues = []
         let tempDates  = []
-        console.log("Here is the data")
-        console.log(props.data)
         let data = props.data.attributes
         Object.keys(data).sort().forEach(date=>{
             tempDates.push(date)

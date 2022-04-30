@@ -21,7 +21,7 @@ const BuySellForm = (props)=>{
         // After 3 seconds set the show value to false
         setShow(false)
       }, 3000)
-  
+
       return () => {
         clearTimeout(timeId)
       }
@@ -48,9 +48,10 @@ const BuySellForm = (props)=>{
           updatedMessage = { message :`Invalid Number: Please Enter a number greater than 0`,class: 'alert alert-danger'}
         }
       
-         else if(e.target.id === 'buy'){
+          else if(e.target.id === 'buy'){
           res = await axios.post("http://localhost:3001/sale/buy", targetStock,{withCredentials:true})
           updatedMessage = { message :`Your purchase of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
+          setSell(true)
         }else if(e.target.id === 'sell'){
           res = await axios.patch("http://localhost:3001/sale/sell", targetStock,{withCredentials:true})
           updatedMessage = { message :`Your sale of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
@@ -64,7 +65,7 @@ const BuySellForm = (props)=>{
       setMessageContent(updatedMessage)
       setShow(true)
     }
-  
+
     const updateQuanity = (e)=>{
       e.preventDefault()
       setQuantity(e.target.value)
