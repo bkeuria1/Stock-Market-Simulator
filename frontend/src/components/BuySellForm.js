@@ -10,8 +10,8 @@ const BuySellForm = (props)=>{
     const stock = useContext(StockContext)
     useEffect(()=>{
       ownsStock()
-      setSell(false)
     },[stock])
+
     useEffect(()=>{
       setTotal(quantity*props.currentPrice)
     },[quantity])
@@ -73,17 +73,11 @@ const BuySellForm = (props)=>{
     }
 
     const ownsStock = async()=>{
-      const res = await axios.get("http://localhost:3001/stock/userStocks",{withCredentials:true})
-      console.log(res.data)
-      res.data.forEach(ownedStock => {
-        console.log(stock.ticker, stock)
-
-        if(ownedStock.ticker === stock){
-          console.log("found")
-          setSell(true)
-        }
-      });
+      const ownedStock = await axios.get("http://localhost:3001/stock/userStocks",{withCredentials:true})
+      const found = ownedStock.data.some(el => el.ticker === stock)
+      if(found)setSell(true)
     }
+
     return(
       
 
