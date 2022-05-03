@@ -1,7 +1,7 @@
 import React, {useState,useEffect,useContext} from 'react'
 import axios from 'axios'
 import Chart from './chart'
-import { StockContext } from '../context/stockContext'
+import { StockContext } from '../context/buyingPowerContext'
 const SearchForm = ()=>{
     const [stock, setStock] = useState('')
     const [query, setQuery] = useState('')
@@ -59,9 +59,9 @@ const SearchForm = ()=>{
                         <option value="1Y">1Y</option>
                         <option value= "MAX">MAX</option>
                     </select>
-                    <StockContext.Provider value={stock}>
-                        <Chart stock = {stock} data = {data.data} timeFrame = {timeFrame}/>
-                    </StockContext.Provider>
+    
+                    <Chart stock = {stock} data = {data.data} timeFrame = {timeFrame}/>
+                    
                 </div>
            
                 

@@ -1,14 +1,13 @@
 import {React,useState,useEffect,useContext} from 'react'
-import { Line } from "react-chartjs-2";
 import {Chart as ChartJS} from 'chart.js/auto'
+import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import BuySellForm from './BuySellForm';
-import { StockContext } from '../context/stockContext';
 const Chart = (props) =>{
     const [closingValues, setClosingValues] = useState({})
     const [dates, setDates] = useState([])
     const [currentPrice,setCurrentPrice] = useState(0)
-    const stock = useContext(StockContext)
+    const stock = props.stock
     useEffect (()=>{
         if(props.data){
             parseData()
@@ -59,7 +58,7 @@ const Chart = (props) =>{
 
             {Object.keys(closingValues).length>0 &&
                 <div>
-                    <BuySellForm currentPrice = {currentPrice}></BuySellForm>
+                    <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
                     <Line data = {chartData} options = {options}/>
                 </div>
             }

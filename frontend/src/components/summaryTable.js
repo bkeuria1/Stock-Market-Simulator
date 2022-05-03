@@ -6,7 +6,7 @@ const SummaryTable = ()=>{
     const [stockWithPrices, setStockWithPrices] = useState([])
     useEffect(()=>{
         getUserStocks()
-    },[])
+    },[JSON.stringify(userStocks)])
 
     useEffect(()=>{
         getCurrentPrices()  
@@ -32,16 +32,16 @@ const SummaryTable = ()=>{
                 queryString+=`${stock.ticker}%2c`
             })
            
-            //const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
-            //console.log(res.data)
-            let tempPrices = []
-            for(let i =0;i<10;i++){
-                tempPrices.push(i)
-            }
-            // res.data.data.forEach(stock=>{
-            //     console.log(stock.attributes.last)
-            //     tempPrices.push(stock.attributes.last)
-            // })
+            const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
+            console.log(res.data)
+             let tempPrices = []
+            // for(let i =0;i<10;i++){
+            //     tempPrices.push(i)
+            // }
+            res.data.data.forEach(stock=>{
+                console.log(stock.attributes.last)
+                tempPrices.push(stock.attributes.last)
+            })
             setCurrentPrices(tempPrices)
         }
     }
@@ -50,7 +50,7 @@ const SummaryTable = ()=>{
         let tempStockInfo = JSON.parse(JSON.stringify(userStocks)) //creating a deep copy
         tempStockInfo.forEach((stock, index)=> {
             const price = currentPrices[index]
-            stock.price = price 
+            stock.price = price
           });
           setStockWithPrices(tempStockInfo)
     }

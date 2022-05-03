@@ -2,6 +2,8 @@ import {React,useState,useEffect,createContext } from 'react'
 import axios from 'axios'
 import SummaryTable from './summaryTable'
 import SearchForm from './searchForm'
+import { BuyingPowerContext } from '../context/buyingPowerContext'
+import { UserStocksContext } from '../context/userStocksContext'
 const Dashboard = (props)=>{
     const [stock, setStock] = useState('')
     const [query, setQuery] = useState('')
@@ -9,10 +11,12 @@ const Dashboard = (props)=>{
     const [data,setData] = useState(null)
     const [timeFrame, setTimeFrame] = useState('1D')
     const [buyingPower,setBuyingPower] = useState(0)
+    const [userStocks,setUserStocks] = useState([])
+    const buyingPowerContext = [buyingPower,setBuyingPower]
 
     useEffect(()=>{
         getBuyingPower()
-    },[])
+    },[buyingPower])
       
     useEffect (()=>{
         checkLogin()
@@ -37,6 +41,12 @@ const Dashboard = (props)=>{
         axios.get("http://localhost:3001/user/reset",{withCredentials:true})
     }
 
+    const getUserStocks = async()=>{
+        const res = await axios.get('http://localhost:3001/stock/userStocks',{withCredentials:true})
+        setUserStocks(res.data)
+    }
+
+
     return (
        
         <div>
@@ -50,8 +60,13 @@ const Dashboard = (props)=>{
                     <a href = {process.env.REACT_APP_RESET_PROFILE_URL} class = "btn btn-danger">Reset Profile</a>
 
                     <h2>Buying Power: {buyingPower.toFixed(2)}</h2>
-                    <SearchForm></SearchForm>
-                    <SummaryTable></SummaryTable>
+                    <BuyingPowerContext.Provider value = {buyingPowerContext}>
+                        <SummaryTable></SummaryTable>
+                        <SearchForm ></SearchForm> {/*Contains SearchForm->Chart->BuySellForm */}
+                    </BuyingPowerContext.Provider>
+
+                        
+                    
                     
                 </div>
                

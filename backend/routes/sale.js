@@ -44,15 +44,15 @@ router.patch('/sell', ensureAuth, async(req,res)=>{
   try{
     const currentStock = await Stock.findOne({user:req.user, ticker:req.body.ticker})
     if(req.body.quantity>currentStock.quantity){
-      res.status(400).send()
-      return
+      return res.status(400).send()
+      
     }
     if(currentStock.quantity === req.body.quantity){
       user.buyingPower += req.body.total
       user.save()
       await Stock.deleteOne(currentStock)
-      res.send()
-      return
+      return res.send()
+    
     }
     currentStock.quantity -= req.body.quantity
     currentStock.total -= req.body.total

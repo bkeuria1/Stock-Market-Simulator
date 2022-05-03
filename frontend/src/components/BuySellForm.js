@@ -1,13 +1,16 @@
 import React, {useState,useEffect,useContext} from 'react'
 import axios from 'axios';
-import { StockContext } from '../context/stockContext';
+import { BuyingPowerContext } from '../context/buyingPowerContext';
+import { UserStocksContext } from '../context/userStocksContext';
 const BuySellForm = (props)=>{
     const [quantity,setQuantity] = useState(0)
     const [total, setTotal] = useState(0);
     const [sell, setSell] = useState(false)
     const [show,setShow] = useState(false)
     const [messageContent, setMessageContent] = useState({message:'', class:''})
-    const stock = useContext(StockContext)
+    const stock = props.stock
+    const [buyingPower,setBuyingPower] = useContext(BuyingPowerContext)
+    //const [userStocks,setUserStocks] = useContext(UserStocksContext)
     useEffect(()=>{
       ownsStock()
     },[stock])
@@ -52,9 +55,11 @@ const BuySellForm = (props)=>{
           res = await axios.post("http://localhost:3001/sale/buy", targetStock,{withCredentials:true})
           updatedMessage = { message :`Your purchase of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
           setSell(true)
+          setBuyingPower(buyingPower - total)
         }else if(e.target.id === 'sell'){
           res = await axios.patch("http://localhost:3001/sale/sell", targetStock,{withCredentials:true})
           updatedMessage = { message :`Your sale of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
+          setBuyingPower(buyingPower + total)
         }
         setQuantity(0)
         setTotal(0)
