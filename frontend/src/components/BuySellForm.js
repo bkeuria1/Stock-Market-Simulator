@@ -10,7 +10,7 @@ const BuySellForm = (props)=>{
     const [messageContent, setMessageContent] = useState({message:'', class:''})
     const stock = props.stock
     const [buyingPower,setBuyingPower] = useContext(BuyingPowerContext)
-    //const [userStocks,setUserStocks] = useContext(UserStocksContext)
+    const {getUserStocks, userStocks} = useContext(UserStocksContext)
     useEffect(()=>{
       ownsStock()
     },[stock])
@@ -56,6 +56,7 @@ const BuySellForm = (props)=>{
           updatedMessage = { message :`Your purchase of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
           setSell(true)
           setBuyingPower(buyingPower - total)
+          
         }else if(e.target.id === 'sell'){
           res = await axios.patch("http://localhost:3001/sale/sell", targetStock,{withCredentials:true})
           updatedMessage = { message :`Your sale of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
@@ -63,6 +64,7 @@ const BuySellForm = (props)=>{
         }
         setQuantity(0)
         setTotal(0)
+        getUserStocks()
       }catch(err){
         updatedMessage = { message:"You're transaction was unsuccesful", class:'alert alert-danger'}
       }

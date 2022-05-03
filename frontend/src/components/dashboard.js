@@ -4,19 +4,20 @@ import SummaryTable from './summaryTable'
 import SearchForm from './searchForm'
 import { BuyingPowerContext } from '../context/buyingPowerContext'
 import { UserStocksContext } from '../context/userStocksContext'
+
 const Dashboard = (props)=>{
-    const [stock, setStock] = useState('')
-    const [query, setQuery] = useState('')
     const [loggedIn, setLoggedIn] = useState(false)
-    const [data,setData] = useState(null)
-    const [timeFrame, setTimeFrame] = useState('1D')
     const [buyingPower,setBuyingPower] = useState(0)
     const [userStocks,setUserStocks] = useState([])
     const buyingPowerContext = [buyingPower,setBuyingPower]
-
+    // const userStocksContext = [userStocks,setUserStocks]
     useEffect(()=>{
         getBuyingPower()
     },[buyingPower])
+
+    useEffect(()=>{
+        getUserStocks()
+    },[JSON.stringify(userStocks)])
       
     useEffect (()=>{
         checkLogin()
@@ -42,6 +43,7 @@ const Dashboard = (props)=>{
     }
 
     const getUserStocks = async()=>{
+        console.log("Get User stocks called")
         const res = await axios.get('http://localhost:3001/stock/userStocks',{withCredentials:true})
         setUserStocks(res.data)
     }
@@ -51,25 +53,18 @@ const Dashboard = (props)=>{
        
         <div>
             {loggedIn ?
-
-    
-
                 <div>
-                    
                     <a href = {process.env.REACT_APP_SIGN_OUT_URL} class = "btn btn-danger">Log Out</a>
                     <a href = {process.env.REACT_APP_RESET_PROFILE_URL} class = "btn btn-danger">Reset Profile</a>
 
                     <h2>Buying Power: {buyingPower.toFixed(2)}</h2>
                     <BuyingPowerContext.Provider value = {buyingPowerContext}>
-                        <SummaryTable></SummaryTable>
-                        <SearchForm ></SearchForm> {/*Contains SearchForm->Chart->BuySellForm */}
-                    </BuyingPowerContext.Provider>
-
-                        
-                    
-                    
+                        <UserStocksContext.Provider value = {{getUserStocks,userStocks}}>
+                            <SearchForm ></SearchForm> {/*Contains SearchForm->Chart->BuySellForm */}
+                            <SummaryTable></SummaryTable>
+                        </UserStocksContext.Provider> 
+                    </BuyingPowerContext.Provider>   
                 </div>
-               
                 :
                 <div>
                 <h1>You need to be logged in to access the dashboard</h1>
