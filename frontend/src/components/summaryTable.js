@@ -5,7 +5,7 @@ import { UserStocksContext } from '../context/userStocksContext'
 import {  faRefresh } from '@fortawesome/free-solid-svg-icons'
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-const SummaryTable = ()=>{
+const SummaryTable = (props)=>{
     //const [userStocks,setUserStocks] = useState([])
     const [currentPrices,setCurrentPrices] = useState([])
     const [stockWithPrices, setStockWithPrices] = useState([])
@@ -85,7 +85,7 @@ const SummaryTable = ()=>{
                         <tbody>
                             {stockWithPrices.map(stock=>{
                                     return(
-                                        <tr onClick={()=>console.log("clicked")}>
+                                        <tr onClick={()=>props.setStock(stock.ticker)}>
                                             <td>{stock.ticker}</td>
                                             <td>{stock.quantity}</td>
                                             <td>${stock.total}</td>

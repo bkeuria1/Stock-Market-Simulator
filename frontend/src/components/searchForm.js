@@ -3,12 +3,13 @@ import axios from 'axios'
 import Chart from './chart'
 import { StockContext } from '../context/buyingPowerContext'
 import {Button,Form} from 'react-bootstrap';
-const SearchForm = ()=>{
-    const [stock, setStock] = useState('')
+const SearchForm = (props)=>{
+    // const [stock, setStock] = useState('')
     const [query, setQuery] = useState('')
     const [data,setData] = useState(null)
     const [timeFrame, setTimeFrame] = useState('1D')
-
+    const stock = props.stock
+    console.log(stock)
     useEffect (()=>{
         if(stock != ''){
             getStockData()
@@ -23,7 +24,7 @@ const SearchForm = ()=>{
 
     const updateStock = (e)=>{
         e.preventDefault()
-        setStock(query)
+        props.setStock(query)
     }
 
     async function getStockData(){

@@ -6,6 +6,7 @@ import { BuyingPowerContext } from '../context/buyingPowerContext'
 import { UserStocksContext } from '../context/userStocksContext'
 import Button from 'react-bootstrap/Button';
 const Dashboard = (props)=>{
+    const [stock,setStock] = useState('')
     const [loggedIn, setLoggedIn] = useState(false)
     const [buyingPower,setBuyingPower] = useState(0)
     const [userStocks,setUserStocks] = useState([])
@@ -60,8 +61,8 @@ const Dashboard = (props)=>{
                     <h2>Buying Power: {buyingPower.toFixed(2)}</h2>
                     <BuyingPowerContext.Provider value = {buyingPowerContext}>
                         <UserStocksContext.Provider value = {{getUserStocks,userStocks}}>
-                            <SearchForm ></SearchForm> {/*Contains SearchForm->Chart->BuySellForm */}
-                            <SummaryTable></SummaryTable>
+                            <SearchForm stock = {stock} setStock = {setStock}></SearchForm> {/*Contains SearchForm->Chart->BuySellForm */}
+                            <SummaryTable stock = {stock} setStock = {setStock}></SummaryTable>
                         </UserStocksContext.Provider> 
                     </BuyingPowerContext.Provider>   
                 </div>

@@ -31,8 +31,6 @@ const BuySellForm = (props)=>{
       }
     },[show])
 
-
-
     const buyStock = async (e)=>{
       console.log(e.target.id)
       e.preventDefault()
@@ -87,10 +85,7 @@ const BuySellForm = (props)=>{
     }
 
     return(
-      
-
       <div>
-      
         <Form>
           <Form.Group>
                 <Form.Label for ='buyForm'>Shares</Form.Label>
@@ -107,11 +102,8 @@ const BuySellForm = (props)=>{
             {messageContent.message}
           </div>
 
-      }
-        
+      } 
     </div>
-
-    
     )
 }
 export default BuySellForm
