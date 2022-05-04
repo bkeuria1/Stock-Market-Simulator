@@ -2,6 +2,7 @@ import React, {useState,useEffect,useContext} from 'react'
 import axios from 'axios';
 import { BuyingPowerContext } from '../context/buyingPowerContext';
 import { UserStocksContext } from '../context/userStocksContext';
+import {Button,Form} from 'react-bootstrap';
 const BuySellForm = (props)=>{
     const [quantity,setQuantity] = useState(0)
     const [total, setTotal] = useState(0);
@@ -90,18 +91,17 @@ const BuySellForm = (props)=>{
 
       <div>
       
-        <form>
-        <div class="form-group">
-              <label for ='buyForm'>Shares</label>
-              <input class="form-control"  type='number' id = 'buyForm' onChange = {updateQuanity} value = {quantity} ></input>
-              <label>Total Cost:{total}</label>
-          <button id = 'buy' onClick = {buyStock} class = 'btn btn-primary'>Buy {stock}</button>
-          {sell &&
-            <button id = 'sell' onClick = {buyStock} class = 'btn btn-danger'>Sell {stock}</button>
-          }
-        </div>
-        </form>
-
+        <Form>
+          <Form.Group>
+                <Form.Label for ='buyForm'>Shares</Form.Label>
+                <Form.Control  type='number' id = 'buyForm' onChange = {updateQuanity} value = {quantity} ></Form.Control>
+                <Form.Label>Total Cost:{total}</Form.Label>
+            <Button id = 'buy' onClick = {buyStock} class = 'primary'>Buy {stock}</Button>
+            {sell &&
+              <Button id = 'sell' onClick = {buyStock} variant = 'danger'>Sell {stock}</Button>
+            }
+          </Form.Group>
+        </Form>
       {show &&
           <div class = {messageContent.class}>
             {messageContent.message}

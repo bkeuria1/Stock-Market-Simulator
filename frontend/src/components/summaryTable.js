@@ -1,14 +1,16 @@
 import React, {useState,useEffect,useContext} from 'react'
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UserStocksContext } from '../context/userStocksContext'
+import {  faRefresh } from '@fortawesome/free-solid-svg-icons'
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 const SummaryTable = ()=>{
     //const [userStocks,setUserStocks] = useState([])
     const [currentPrices,setCurrentPrices] = useState([])
     const [stockWithPrices, setStockWithPrices] = useState([])
+    const [total,setTotal] = useState(0)
     const {getUserStock,userStocks} = useContext(UserStocksContext)
-    // useEffect(()=>{
-    //     getUserStocks()
-    // },[JSON.stringify(userStocks)])
 
     useEffect(()=>{
         getCurrentPrices()  
@@ -20,11 +22,18 @@ const SummaryTable = ()=>{
         } 
     },[JSON.stringify(currentPrices)])
 
+    useEffect(()=>{
+        getTotal()
+    },[JSON.stringify(stockWithPrices)])
 
-    // const getUserStocks = async()=>{
-    //     const res = await axios.get('http://localhost:3001/stock/userStocks',{withCredentials:true})
-    //     setUserStocks(res.data)
-    // }
+
+   const getTotal = ()=>{
+       let tempTotal = 0
+       stockWithPrices.forEach(stock=>{
+            tempTotal += stock.price*stock.quantity-stock.total
+       })
+       setTotal(tempTotal)
+   }
 
     const getCurrentPrices = async()=>{
         console.log("get current prices called")
@@ -58,40 +67,44 @@ const SummaryTable = ()=>{
     }
     return(
         <div>
-            <i class="fa fa-refresh" aria-hidden="true"></i>
-        {stockWithPrices.length>0 && (
-            
-            <table class = "table table-striped">
-                <tr>
-                    <th>Symbol</th>
-                    <th>Shares</th>
-                    <th>Total</th>
-                    <th>Average Purchase Price</th>
-                    <th>Current Price</th>
-                    <th>Gains/Loses</th>
-                </tr>
-                    <tbody>
-                        {stockWithPrices.map(stock=>{
-                                return(
-                                    <tr>
-                                        <td>{stock.ticker}</td>
-                                        <td>{stock.quantity}</td>
-                                        <td>${stock.total}</td>
-                                        <td>${stock.total/stock.quantity}</td>
-                                        <td>{stock.price}</td>
-                                        <td>${stock.price*stock.quantity-stock.total }</td>
-                                    </tr>
-                                )
-                            })}
-                            <tr>
-                                <td>hello</td>
-                            </tr>
-                    </tbody>
-    
+            <Button variant = "primary" onClick={getCurrentPrices}>
+                Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
+            </Button>
+           
+            {stockWithPrices.length>0 && (
+        
+                <Table  bordered hover>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Shares</th>
+                        <th>Total</th>
+                        <th>Average Purchase Price</th>
+                        <th>Current Price</th>
+                        <th>Gains/Loses</th>
+                    </tr>
+                        <tbody>
+                            {stockWithPrices.map(stock=>{
+                                    return(
+                                        <tr onClick={()=>console.log("clicked")}>
+                                            <td>{stock.ticker}</td>
+                                            <td>{stock.quantity}</td>
+                                            <td>${stock.total}</td>
+                                            <td>${(stock.total/stock.quantity)}</td>
+                                            <td>{(stock.price)}</td>
+                                            <td>${(stock.price*stock.quantity-stock.total) }</td>
+                                        </tr>
+                                    )
+                                })}
+                            
+                        </tbody>
+                        <tfoot>
+                            <td>Total</td>
+                            <td>{total}</td>
+                        </tfoot>
+                </Table>
+            )
+            }
 
-            </table>
-        )
-        }
         </div>
     )
 }

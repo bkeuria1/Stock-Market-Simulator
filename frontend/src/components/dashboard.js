@@ -4,7 +4,7 @@ import SummaryTable from './summaryTable'
 import SearchForm from './searchForm'
 import { BuyingPowerContext } from '../context/buyingPowerContext'
 import { UserStocksContext } from '../context/userStocksContext'
-
+import Button from 'react-bootstrap/Button';
 const Dashboard = (props)=>{
     const [loggedIn, setLoggedIn] = useState(false)
     const [buyingPower,setBuyingPower] = useState(0)
@@ -54,7 +54,7 @@ const Dashboard = (props)=>{
         <div>
             {loggedIn ?
                 <div>
-                    <a href = {process.env.REACT_APP_SIGN_OUT_URL} class = "btn btn-danger">Log Out</a>
+                    <Button href= {process.env.REACT_APP_RESET_PROFILE_URL} variant = "danger" >Log Out</Button>
                     <a href = {process.env.REACT_APP_RESET_PROFILE_URL} class = "btn btn-danger">Reset Profile</a>
 
                     <h2>Buying Power: {buyingPower.toFixed(2)}</h2>
