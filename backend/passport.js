@@ -17,6 +17,7 @@ module.exports = function (passport) {
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
           image: profile.photos[0].value,
+          email: profile.emails[0].value
         }
 
         try {
@@ -36,7 +37,7 @@ module.exports = function (passport) {
   )
 
   passport.serializeUser((user, done) => {
-    done(null, user.id)
+    done(null, user)
   })
 
   passport.deserializeUser((id, done) => {

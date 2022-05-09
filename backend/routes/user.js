@@ -10,7 +10,6 @@ const stock = require('../models/stock');
 router.get('/buyingPower', ensureAuth,async(req,res)=>{
     try{
         const buyingPower = await req.user.buyingPower
-        console.log(buyingPower)
         res.send({buyingPower:buyingPower})
     }catch(err){
         console.log(err)
@@ -30,5 +29,18 @@ router.get('/reset',ensureAuth,async(req,res)=>{
         conssole.log(err)
         res.status(400).send("Could not reset profile")
     }
+})
+
+router.delete('/delete',ensureAuth,async(req,res)=>{
+    const user = req.user
+    console.log(user)
+    try{
+        await user.delete()
+        return res.send()
+    }catch(err){
+        console.log(err)
+    }
+
+
 })
 module.exports = router

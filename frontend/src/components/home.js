@@ -1,11 +1,12 @@
 import React from 'react'
+import { Button,Card } from 'react-bootstrap'
 const Home = ()=>{
     return(
-        <div>
-            <h1>Welcome the Stock Simulator Application!</h1>
-            <h2>Sign in with Google To Continue</h2>
-            <a href = {process.env.REACT_APP_SIGN_IN_URL} class = "btn btn-primary">Sign in</a> 
-        </div>
+        <Card style = {{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh', width: '100%'}}>
+            <h1>Welcome to the Stock Market Application!</h1>
+            <h2>Please sign in to continue</h2>    
+            <Button href = {process.env.REACT_APP_SIGN_IN_URL} variant = "primary">Sign in</Button>
+        </Card>
         
     )
 }

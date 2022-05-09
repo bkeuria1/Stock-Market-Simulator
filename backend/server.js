@@ -11,7 +11,7 @@ const saleRouter = require('./routes/sale')
 const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
 const stockRouter = require('./routes/stock')
-
+const mailRouter = require('./routes/mail')
 require('./passport')(passport)
 let whitelist = ['http://localhost:3000','http://localhost:3000/new']
 
@@ -51,4 +51,5 @@ app.use('/auth', authRouter)
 app.use('/sale', saleRouter)
 app.use('/user', userRouter)
 app.use('/stock',stockRouter)
+app.use('/mail',mailRouter)
 app.listen(process.env.PORT || 3001)

@@ -16,13 +16,12 @@ const Chart = (props) =>{
       }, [props.data])
 
     const chartData = {
-        
         labels: dates,
         datasets: [{
             data: closingValues,
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
+            tension: .01
         }]
     }
 
@@ -43,6 +42,13 @@ const Chart = (props) =>{
           setCurrentPrice(res.data.data[0].attributes.last)
     }
     const options = {
+        responsive: true, 
+        maintainAspectRatio: true,
+        legend: {
+            display: true,
+            text: "Price"
+        
+        },
         responsive: true,
         scales: {
             y: {
