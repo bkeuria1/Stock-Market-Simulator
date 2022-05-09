@@ -46,16 +46,16 @@ const SummaryTable = (props)=>{
             })
            
             
-            //const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
+            const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
             // console.log(res.data)
              let tempPrices = []
-            for(let i =0;i<10;i++){
-                tempPrices.push(Math.random()*10)
-            }
-            // res.data.data.forEach(stock=>{
-            //     console.log(stock.attributes.last)
-            //     tempPrices.push(stock.attributes.last)
-            // })
+            // for(let i =0;i<10;i++){
+            //     tempPrices.push(Math.random()*10)
+            // }
+            res.data.data.forEach(stock=>{
+                console.log(stock.attributes.last)
+                tempPrices.push(stock.attributes.last)
+            })
             setCurrentPrices(tempPrices)
         }
     }

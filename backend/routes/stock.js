@@ -47,6 +47,19 @@ router.get('/userStocks', ensureAuth, async (req,res)=>{
     }
 })
 
+router.get('/news',ensureAuth,async(req,res)=>{
+    const stock = req.query.stock.toUpperCase()
+    const url = `https://yfapi.net/ws/insights/v1/finance/insights?symbol=${stock}`
+    try{
+        const news = await axios.get(url,options)
+        console.log(news.data.finance.result.reports)
+        res.send(news.data)
+    }catch(err){
+        res.send(err).status(400)
+    }
+
+})
+
 
 
 module.exports = router

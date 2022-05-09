@@ -3,6 +3,7 @@ import {Chart as ChartJS} from 'chart.js/auto'
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import BuySellForm from './BuySellForm';
+import News from './news';
 const Chart = (props) =>{
     const [closingValues, setClosingValues] = useState({})
     const [dates, setDates] = useState([])
@@ -18,6 +19,7 @@ const Chart = (props) =>{
     const chartData = {
         labels: dates,
         datasets: [{
+            label:"Price",
             data: closingValues,
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
@@ -44,11 +46,6 @@ const Chart = (props) =>{
     const options = {
         responsive: true, 
         maintainAspectRatio: true,
-        legend: {
-            display: true,
-            text: "Price"
-        
-        },
         responsive: true,
         scales: {
             y: {
@@ -66,6 +63,7 @@ const Chart = (props) =>{
                 <div>
                     <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
                     <Line data = {chartData} options = {options}/>
+                    <News stock = {stock}></News>
                 </div>
             }
         </div>
