@@ -2,7 +2,7 @@ import React, {useState,useEffect,useContext} from 'react'
 import axios from 'axios'
 import Chart from './chart'
 import { StockContext } from '../context/buyingPowerContext'
-import {Button,Form} from 'react-bootstrap';
+import {Button,Form,Tabs,Tab} from 'react-bootstrap';
 const SearchForm = (props)=>{
     // const [stock, setStock] = useState('')
     const [query, setQuery] = useState('')
@@ -42,8 +42,8 @@ const SearchForm = (props)=>{
         setTimeFrame(e.target.value)
     }
     return(
-        <div>
-            <Form onSubmit= {updateStock}>
+        <div style ={{float: 'left',width : "52rem"}}>
+            <Form onSubmit= {updateStock} >
                 
                 <Form.Control type="text" placeholder = "Search for a Stock" onChange={updateQuery}  value = {query}/>
                 
@@ -53,7 +53,7 @@ const SearchForm = (props)=>{
             </Form>
             {data &&
                 <div>
-                    <Form.Select onChange={udpateTimeFrame}>
+                    <Form.Select onChange={udpateTimeFrame} >
                         <option selected value = "1D">1D</option>
                         <option value="5D">5D</option>
                         <option value="1M">1M</option>

@@ -14,7 +14,7 @@ router.post('/buy', ensureAuth,async(req,res)=>{
 
   let stock = new Stock(req.body)
   stock.user = user
-  if(buyingPower<total){
+  if(buyingPower<total || req.body.quantity>Number.MAX_SAFE_INTEGER){
     return res.status(400).send()
 
   }
