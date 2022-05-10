@@ -63,7 +63,7 @@ const Chart = (props) =>{
                 <div>
                     <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
                     <Line data = {chartData} options = {options}/>
-                    <News stock = {stock}></News>
+                    {/* <News stock = {stock}></News> */}
                 </div>
             }
         </div>

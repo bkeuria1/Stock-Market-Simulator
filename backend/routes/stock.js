@@ -52,7 +52,6 @@ router.get('/news',ensureAuth,async(req,res)=>{
     const url = `https://yfapi.net/ws/insights/v1/finance/insights?symbol=${stock}`
     try{
         const news = await axios.get(url,options)
-        console.log(news.data.finance.result.reports)
         res.send(news.data)
     }catch(err){
         res.send(err).status(400)
