@@ -69,7 +69,7 @@ const SummaryTable = (props)=>{
           setStockWithPrices(tempStockInfo)
     }
     return(
-        <div style={{ width: "60rem",float: 'right'}}>
+        <div style={{ width: "50%",float: 'right'}}>
 
             <Card>
             <Card.Body>

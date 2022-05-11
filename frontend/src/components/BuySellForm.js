@@ -8,6 +8,7 @@ const BuySellForm = (props)=>{
     const [total, setTotal] = useState(0);
     const [sell, setSell] = useState(false)
     const [show,setShow] = useState(false)
+
     const [messageContent, setMessageContent] = useState({message:'', class:''})
     const stock = props.stock
     const {getBuyingPower, buyingPower} = useContext(BuyingPowerContext)

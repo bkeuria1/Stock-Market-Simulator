@@ -10,26 +10,20 @@ const News = (props)=>{
 
     const getNews = async()=>{
         const res = await axios.get(`http://localhost:3001/stock/news?stock=${props.stock}`,{withCredentials:true})
-        setArticles(res.data.finance.result.reports)
+        setArticles(res.data.data)
     }
     return(
         <div>
             {articles?.length>0 &&(
                 <div>
                 {articles.map(article=>(
-                    <Card>
-                        <Card.Title>
-                            {article.title}
-                        </Card.Title>
-                        <Card.Text>
-                            Provider: {article.provider}
-                        </Card.Text>
-                        <Card.Text>
-                            Date : {article.publishedOn}
-                        </Card.Text>
-                        <Card.Text>
-                            Summary: {article.summary}
-                        </Card.Text>
+                    <Card style = {{padding : "5rem"}}>
+                        <Card.Title>{article.title}</Card.Title>
+                        <Card.Text>{article.source} {article.published_at}</Card.Text>
+                        <Card.Text>Summary: {article.description}</Card.Text>
+                        <Card.Link href = {article.url}>Source</Card.Link>
+                        <Card.Img src = {article.image_url}></Card.Img>
+                       
                     </Card>
                 ))
 
