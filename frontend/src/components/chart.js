@@ -1,23 +1,38 @@
-import {React,useState,useEffect,useContext} from 'react'
+import {React,useState,useEffect} from 'react'
 import {Chart as ChartJS} from 'chart.js/auto'
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import BuySellForm from './BuySellForm';
+import { Form } from 'react-bootstrap';;
 const Chart = (props) =>{
     const [closingValues, setClosingValues] = useState({})
     const [dates, setDates] = useState([])
     const [currentPrice,setCurrentPrice] = useState(0)
+    const [timeFrame, setTimeFrame] = useState('1D')
+    const [data,setData] = useState(null)
     const stock = props.stock
-    useEffect (()=>{
-        if(props.data){
-            parseData()
+    useEffect(()=>{
+        if(stock.length>0){
+            getStockData()
+        }
+    },[stock,timeFrame])
+
+    useEffect(()=>{
+        if(stock.length>0){
             getCurrentPrice()
         }
-      }, [props.data])
+    },[stock])
+    
+    useEffect (()=>{
+        if(stock.length>0){
+            parseData()
+        }
+      }, [JSON.stringify(data)])
 
     const chartData = {
         labels: dates,
         datasets: [{
+            label:"Price",
             data: closingValues,
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
@@ -28,14 +43,19 @@ const Chart = (props) =>{
     function parseData(){
         let tempValues = []
         let tempDates  = []
-        let data = props.data.attributes
-        Object.keys(data).sort().forEach(date=>{
-            tempDates.push(date)
-            tempValues.push(data[date].close)
-        })
-       
-        setClosingValues(tempValues)
-        setDates(tempDates)
+        let dataAttributes = data.attributes
+        console.log(dataAttributes)
+        if(dataAttributes){
+            console.log("data >0")
+            Object.keys(dataAttributes).sort().forEach(date=>{
+                console.log(date )
+                tempDates.push(date)
+                tempValues.push(dataAttributes[date].close)
+            })
+        
+            setClosingValues(tempValues)
+            setDates(tempDates)
+        }
     }
     const getCurrentPrice = async()=>{
           const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${stock}`,{withCredentials:true})
@@ -44,11 +64,6 @@ const Chart = (props) =>{
     const options = {
         responsive: true, 
         maintainAspectRatio: true,
-        legend: {
-            display: true,
-            text: "Price"
-        
-        },
         responsive: true,
         scales: {
             y: {
@@ -57,10 +72,34 @@ const Chart = (props) =>{
             }
         }
     }
+
+    async function getStockData(){
+        let response
+        try{
+            response = await axios.get(`http://localhost:3001/stock/chart?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
+            setData(response.data)
+        }catch(err){
+            console.log(err)
+        }
+       
+    }
+    const udpateTimeFrame = (e)=>{
+        e.preventDefault()
+        setTimeFrame(e.target.value)
+    }
     return(
         <div>
             <h1>{stock}</h1>
             <h3>Current price: {currentPrice}</h3>
+            <Form.Select onChange={udpateTimeFrame} >
+                        <option selected value = "1D">1D</option>
+                        <option value="5D">5D</option>
+                        <option value="1M">1M</option>
+                        <option value="3M">3M</option>
+                        <option value="1Y">1Y</option>
+                        <option value= "MAX">MAX</option>
+            </Form.Select>
+            
 
             {Object.keys(closingValues).length>0 &&
                 <div>
@@ -68,6 +107,7 @@ const Chart = (props) =>{
                     <Line data = {chartData} options = {options}/>
                 </div>
             }
+        
         </div>
     )
 }

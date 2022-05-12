@@ -49,7 +49,7 @@ const SummaryTable = (props)=>{
             //const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
             // console.log(res.data)
              let tempPrices = []
-            for(let i =0;i<10;i++){
+            for(let i =0;i<13;i++){
                 tempPrices.push(Math.random()*10)
             }
             // res.data.data.forEach(stock=>{
@@ -69,7 +69,7 @@ const SummaryTable = (props)=>{
           setStockWithPrices(tempStockInfo)
     }
     return(
-        <div style={{ width: "60rem",float: 'right'}}>
+        <div style={{ width: "50%",float: 'right'}}>
 
             <Card>
             <Card.Body>

@@ -47,6 +47,18 @@ router.get('/userStocks', ensureAuth, async (req,res)=>{
     }
 })
 
+router.get('/news',ensureAuth,async(req,res)=>{
+    const stock = req.query.stock
+    const url = `https://api.marketaux.com/v1/news/all?symbols=${stock}&filter_entities=true&language=en&api_token=${process.env.NEWS_API_KEY}`
+    try{
+        const news = await axios.get(url,options)
+        res.send(news.data)
+    }catch(err){
+        res.send(err).status(400)
+    }
+
+})
+
 
 
 module.exports = router
