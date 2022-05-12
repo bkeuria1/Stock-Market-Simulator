@@ -1,10 +1,9 @@
-import {React,useState,useEffect,useContext} from 'react'
+import {React,useState,useEffect} from 'react'
 import {Chart as ChartJS} from 'chart.js/auto'
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import BuySellForm from './BuySellForm';
-import { Form } from 'react-bootstrap';
-import News from './news';
+import { Form } from 'react-bootstrap';;
 const Chart = (props) =>{
     const [closingValues, setClosingValues] = useState({})
     const [dates, setDates] = useState([])
@@ -13,15 +12,22 @@ const Chart = (props) =>{
     const [data,setData] = useState(null)
     const stock = props.stock
     useEffect(()=>{
-        getStockData()
-    },[stock,timeFrame])
-    useEffect (()=>{
         if(stock.length>0){
-            console.log(data)
-            parseData()
+            getStockData()
+        }
+    },[stock,timeFrame])
+
+    useEffect(()=>{
+        if(stock.length>0){
             getCurrentPrice()
         }
-      }, [data])
+    },[stock])
+    
+    useEffect (()=>{
+        if(stock.length>0){
+            parseData()
+        }
+      }, [JSON.stringify(data)])
 
     const chartData = {
         labels: dates,
@@ -38,11 +44,13 @@ const Chart = (props) =>{
         let tempValues = []
         let tempDates  = []
         let dataAttributes = data.attributes
-        if(data.length>0){
+        console.log(dataAttributes)
+        if(dataAttributes){
             console.log("data >0")
             Object.keys(dataAttributes).sort().forEach(date=>{
+                console.log(date )
                 tempDates.push(date)
-                tempValues.push(data[date].close)
+                tempValues.push(dataAttributes[date].close)
             })
         
             setClosingValues(tempValues)
@@ -69,10 +77,11 @@ const Chart = (props) =>{
         let response
         try{
             response = await axios.get(`http://localhost:3001/stock/chart?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
+            setData(response.data)
         }catch(err){
             console.log(err)
         }
-        setData(response)
+       
     }
     const udpateTimeFrame = (e)=>{
         e.preventDefault()
@@ -98,6 +107,7 @@ const Chart = (props) =>{
                     <Line data = {chartData} options = {options}/>
                 </div>
             }
+        
         </div>
     )
 }

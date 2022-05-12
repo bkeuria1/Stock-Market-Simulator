@@ -58,20 +58,18 @@ const BuySellForm = (props)=>{
         updatedMessage = { message :`Your purchase of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
         await axios.post("http://localhost:3001/mail/sale",updatedMessage,{withCredentials:true})
         setSell(true)
-        //setBuyingPower(buyingPower - total)
         
       }else if(e.target.id === 'sell'){
         res = await axios.patch("http://localhost:3001/sale/sell", targetStock,{withCredentials:true})
         updatedMessage = { message :`Your sale of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
   
 
-        //setBuyingPower(buyingPower + total)
       }
         setQuantity(0)
         setTotal(0)
         getUserStocks()
         getBuyingPower()
-        //sendEmail(updatedMessage)
+        sendEmail(updatedMessage)
       }catch(err){
         console.log(err)
         updatedMessage = { message:"You're transaction was unsuccesful", class:'alert alert-danger'}
@@ -103,7 +101,7 @@ const BuySellForm = (props)=>{
 
     return(
       <div>
-        <Form>
+        <Form onSubmit={(e)=>e.preventDefault}>
           <Form.Group>
                 <Form.Label for ='buyForm'>Shares</Form.Label>
                 <Form.Control  type='number' id = 'buyForm' onChange = {updateQuanity} value = {quantity} ></Form.Control>
