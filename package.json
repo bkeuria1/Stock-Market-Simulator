@@ -1,0 +1,24 @@
+{
+  "name": "stock-market-simulator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node backend/server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
+  },
+  "engines": {
+    "node": "10.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bkeuria1/Stock-Market-Simulator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bkeuria1/Stock-Market-Simulator/issues"
+  },
+  "homepage": "https://github.com/bkeuria1/Stock-Market-Simulator#readme"
+}
