@@ -3,7 +3,9 @@ import {Chart as ChartJS} from 'chart.js/auto'
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import BuySellForm from './BuySellForm';
-import { Form } from 'react-bootstrap';;
+import { Button, Form } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faRefresh } from '@fortawesome/free-solid-svg-icons'
 const Chart = (props) =>{
     const [closingValues, setClosingValues] = useState({})
     const [dates, setDates] = useState([])
@@ -46,9 +48,7 @@ const Chart = (props) =>{
         let dataAttributes = data.attributes
         console.log(dataAttributes)
         if(dataAttributes){
-            console.log("data >0")
-            Object.keys(dataAttributes).sort().forEach(date=>{
-                console.log(date )
+            Object.keys(dataAttributes).sort().forEach(date=>{      
                 tempDates.push(date)
                 tempValues.push(dataAttributes[date].close)
             })
@@ -91,6 +91,9 @@ const Chart = (props) =>{
         <div>
             <h1>{stock}</h1>
             <h3>Current price: {currentPrice}</h3>
+            <Button variant = "primary" onClick={getCurrentPrice}>
+               Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
+            </Button>
             <Form.Select onChange={udpateTimeFrame} >
                         <option selected value = "1D">1D</option>
                         <option value="5D">5D</option>

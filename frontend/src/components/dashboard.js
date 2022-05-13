@@ -17,6 +17,7 @@ const Dashboard = (props)=>{
     },[])
 
     useEffect(()=>{
+        console.log("User stocks called")
         getUserStocks()
     },[])
       
@@ -44,7 +45,6 @@ const Dashboard = (props)=>{
     }
 
     const getUserStocks = async()=>{
-        console.log("Get User stocks called")
         const res = await axios.get('http://localhost:3001/stock/userStocks',{withCredentials:true})
         setUserStocks(res.data)
     }

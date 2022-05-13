@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import Chart from './chart'
-import { StockContext } from '../context/buyingPowerContext'
 import {Button,Form,Tabs,Tab} from 'react-bootstrap';
 import News from './news';
 const SearchForm = (props)=>{
@@ -23,9 +22,7 @@ const SearchForm = (props)=>{
                 <div>
                     <Tabs className="mb-3">
                     <Tab eventKey="Stock" title= {`${stock} News`}>
-                        <News stock = {stock}></News>
-                            <Chart stock = {stock}></Chart>
-                            
+                        <News stock = {stock}></News>        
                         </Tab>
                         <Tab eventKey="Chart" title="Chart">
         

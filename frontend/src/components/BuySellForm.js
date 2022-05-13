@@ -86,9 +86,11 @@ const BuySellForm = (props)=>{
     }
 
     const ownsStock = async()=>{
-      const ownedStock = await axios.get("http://localhost:3001/stock/userStocks",{withCredentials:true})
-      const found = ownedStock.data.some(el => el.ticker === stock)
-      if(found)setSell(true)
+      console.log(userStocks)
+      if(userStocks.length>0){
+        const found = userStocks.some(el => el.ticker === stock)
+        if(found)setSell(true)
+      }
     }
 
     const sendEmail = async(message)=>{
