@@ -4,7 +4,7 @@ import SummaryTable from './summaryTable'
 import SearchForm from './searchForm'
 import { BuyingPowerContext } from '../context/buyingPowerContext'
 import { UserStocksContext } from '../context/userStocksContext'
-import {Button,Card} from 'react-bootstrap';
+import {Button,Card,NavBar} from 'react-bootstrap';
 const Dashboard = (props)=>{
     const [stock,setStock] = useState('')
     const [loggedIn, setLoggedIn] = useState(false)
@@ -17,7 +17,6 @@ const Dashboard = (props)=>{
     },[])
 
     useEffect(()=>{
-        console.log("User stocks called")
         getUserStocks()
     },[])
       
@@ -46,6 +45,7 @@ const Dashboard = (props)=>{
 
     const getUserStocks = async()=>{
         const res = await axios.get('http://localhost:3001/stock/userStocks',{withCredentials:true})
+        console.log("User stocks called")
         setUserStocks(res.data)
     }
 
@@ -69,6 +69,7 @@ const Dashboard = (props)=>{
                 <a href = {process.env.REACT_APP_SIGN_IN_URL} class = "btn btn-primary">Sign in</a> 
                 </div>
             }
+       
 
         </div>
     )

@@ -47,9 +47,9 @@ router.patch('/sell', ensureAuth, async(req,res)=>{
       return res.status(400).send()
       
     }
+    user.buyingPower += req.body.total
+    user.save()
     if(currentStock.quantity === req.body.quantity){
-      user.buyingPower += req.body.total
-      user.save()
       await Stock.deleteOne(currentStock)
       return res.send()
     

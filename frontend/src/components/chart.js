@@ -88,9 +88,10 @@ const Chart = (props) =>{
         setTimeFrame(e.target.value)
     }
     return(
-        <div>
-            <h1>{stock}</h1>
-            <h3>Current price: {currentPrice}</h3>
+        <div style = {{margin:"1.5rem"}}>
+                <h1>{stock}</h1>
+                <h3>Current price: {currentPrice}</h3>
+
             <Button variant = "primary" onClick={getCurrentPrice}>
                Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
             </Button>
@@ -102,6 +103,7 @@ const Chart = (props) =>{
                         <option value="1Y">1Y</option>
                         <option value= "MAX">MAX</option>
             </Form.Select>
+           
             
 
             {Object.keys(closingValues).length>0 &&

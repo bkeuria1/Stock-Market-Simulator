@@ -9,6 +9,7 @@ const News = (props)=>{
     },[props.stock])
 
     const getNews = async()=>{
+        //check database for news
         const res = await axios.get(`http://localhost:3001/stock/news?stock=${props.stock}`,{withCredentials:true})
         setArticles(res.data.data)
     }
@@ -17,7 +18,7 @@ const News = (props)=>{
             {articles?.length>0 &&(
                 <div>
                 {articles.map(article=>(
-                    <Card style = {{padding : "5rem"}}>
+                    <Card style = {{margin : "5rem", padding: "4rem", justifyContent:'center'}}>
                         <Card.Title>{article.title}</Card.Title>
                         <Card.Text>{article.source} {article.published_at}</Card.Text>
                         <Card.Text>Summary: {article.description}</Card.Text>

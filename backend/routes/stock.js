@@ -5,6 +5,7 @@ const axios = require('axios')
 const router = express.Router()
 const User = require('../models/user')
 const Stock = require('../models/stock')
+const News = require('../models/news')
 
 require('../passport.js')
 
@@ -48,15 +49,26 @@ router.get('/userStocks', ensureAuth, async (req,res)=>{
 })
 
 router.get('/news',ensureAuth,async(req,res)=>{
+    //check databse for news first
     const stock = req.query.stock
+
     const url = `https://api.marketaux.com/v1/news/all?symbols=${stock}&filter_entities=true&language=en&api_token=${process.env.NEWS_API_KEY}`
     try{
-        const news = await axios.get(url,options)
+        const news = await axios.get(url)
+        //await axios.post(url,news)
         res.send(news.data)
+        
     }catch(err){
+        console.log(err)
         res.send(err).status(400)
     }
 
+
+})
+
+router.post('/news',ensureAuth,async(req,res)=>{
+    console.log(req.body)
+    res.status.send(400)
 })
 
 

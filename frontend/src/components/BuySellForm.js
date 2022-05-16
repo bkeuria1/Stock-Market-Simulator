@@ -45,12 +45,9 @@ const BuySellForm = (props)=>{
       }
       let res
       let updatedMessage
-      if(quantity<=0){
-        updatedMessage = { message :`Invalid Number: Please Enter a number greater than 0`,class: 'alert alert-danger'}
-      }
       try{
         if(quantity<=0){
-          updatedMessage = { message :`Invalid Number: Please Enter a number greater than 0`,class: 'alert alert-danger'}
+          throw 'quantity must be positive'
         }
       
         else if(e.target.id === 'buy'){
@@ -71,7 +68,7 @@ const BuySellForm = (props)=>{
         getBuyingPower()
         sendEmail(updatedMessage)
       }catch(err){
-        console.log(err)
+        console.log("Here is ther error"+err)
         updatedMessage = { message:"You're transaction was unsuccesful", class:'alert alert-danger'}
       }
       

@@ -10,31 +10,41 @@ const SummaryTable = (props)=>{
     //const [userStocks,setUserStocks] = useState([])
     const [currentPrices,setCurrentPrices] = useState([])
     const [stockWithPrices, setStockWithPrices] = useState([])
-    const [total,setTotal] = useState(0)
+    const [totalGains,setTotalGains] = useState(0)
+    const [totalAssets,setTotalAssets] = useState(0)
     const {getUserStocks,userStocks} = useContext(UserStocksContext)
     const {getBuyingPower, buyingPower} = useContext(BuyingPowerContext)
 
     useEffect(()=>{
+        setCurrentPrices([])
+        setStockWithPrices([])
         getCurrentPrices()  
+        
     },[JSON.stringify(userStocks)])
 
     useEffect(()=>{
         if(userStocks.length>0){
-            addPrice() 
+            addPrice()
+            console.log("Add price called")
+             
         } 
     },[JSON.stringify(currentPrices)])
 
     useEffect(()=>{
-        getTotal()
+        console.log("Get total called")
+        getTotals()
     },[JSON.stringify(stockWithPrices)])
 
 
-   const getTotal = ()=>{
-       let tempTotal = 0
+   const getTotals = ()=>{
+       let tempTotalGains = 0
+       let tempTotalAssets = 0
        stockWithPrices.forEach(stock=>{
-            tempTotal += stock.price*stock.quantity-stock.total
+            tempTotalAssets += stock.total
+            tempTotalGains += stock.price*stock.quantity-stock.total
        })
-       setTotal(tempTotal)
+       setTotalGains(tempTotalGains)
+       setTotalAssets(tempTotalAssets)
    }
 
     const getCurrentPrices = async()=>{
@@ -47,6 +57,9 @@ const SummaryTable = (props)=>{
             
             const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
             let tempPrices = []
+            // for( let i = 0; i<15; i++){
+            //     tempPrices.push(Math.random())
+            // }
             res.data.data.forEach(stock=>{
                 console.log(stock.attributes.last)
                 tempPrices.push(stock.attributes.last)
@@ -68,15 +81,18 @@ const SummaryTable = (props)=>{
 
             <Card>
             <Card.Body>
-               <Card.Title>Current Balance</Card.Title>
+               <Card.Title>Balane Summary</Card.Title>
                 <Card.Text>
-                    Cash Balance:{buyingPower}
+                    Cash Balance: {buyingPower}
                 </Card.Text>
                 <Card.Text>
-                    Portfolio Balance: {total}
+                    Total Gains/Loses: {totalGains}
                 </Card.Text>
                 <Card.Text>
-                    Total Balance: {total+buyingPower}
+                    Total Assets: {totalAssets}
+                </Card.Text>
+                <Card.Text>
+                    Total Balance: {totalAssets+buyingPower+totalGains}
                 </Card.Text>
             </Card.Body>
             </Card>
