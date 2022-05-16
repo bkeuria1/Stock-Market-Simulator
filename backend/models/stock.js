@@ -24,6 +24,6 @@ const stockSchema = new mongoose.Schema({
         required : true
     }   
 })
-// stockSchema.index({ticker:1, user:1},{unique:true})
+stockSchema.index({ticker:1, user:1},{unique:true})
 module.exports = mongoose.model('Stock',stockSchema);
 

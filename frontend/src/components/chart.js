@@ -3,7 +3,7 @@ import {Chart as ChartJS} from 'chart.js/auto'
 import { Line } from "react-chartjs-2";
 import axios from 'axios'
 import BuySellForm from './BuySellForm';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {  faRefresh } from '@fortawesome/free-solid-svg-icons'
 const Chart = (props) =>{
@@ -12,6 +12,7 @@ const Chart = (props) =>{
     const [currentPrice,setCurrentPrice] = useState(0)
     const [timeFrame, setTimeFrame] = useState('1D')
     const [data,setData] = useState(null)
+    const [companyName,setCompanyName] = useState('')
     const stock = props.stock
     useEffect(()=>{
         if(stock.length>0){
@@ -60,6 +61,7 @@ const Chart = (props) =>{
     const getCurrentPrice = async()=>{
           const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${stock}`,{withCredentials:true})
           setCurrentPrice(res.data.data[0].attributes.last)
+          setCompanyName(res.data.data[0].attributes.name)
     }
     const options = {
         responsive: true, 
@@ -88,9 +90,13 @@ const Chart = (props) =>{
         setTimeFrame(e.target.value)
     }
     return(
-        <div style = {{margin:"1.5rem"}}>
-                <h1>{stock}</h1>
+        <div>
+            <Card style = {{margin:'1.5rem',padding:"2.5rem", float:'center'}}>
+                <h1>{companyName}</h1>
+                <h3>{stock}</h3>
                 <h3>Current price: {currentPrice}</h3>
+            </Card>
+
 
             <Button variant = "primary" onClick={getCurrentPrice}>
                Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>

@@ -77,7 +77,7 @@ const SummaryTable = (props)=>{
           setStockWithPrices(tempStockInfo)
     }
     return(
-        <div style={{ width: "50%",float: 'right'}}>
+        <div style={{ width: "50%",float: 'right', padding: '3rem'}}>
 
             <Card>
             <Card.Body>
@@ -96,11 +96,13 @@ const SummaryTable = (props)=>{
                 </Card.Text>
             </Card.Body>
             </Card>
-            <Button variant = "primary" onClick={getCurrentPrices}>
-                Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
-            </Button>
-           
+          
             {stockWithPrices.length>0 && (
+                <div style = {{top: '5rem'}}>
+                <Button variant = "primary" onClick={getCurrentPrices}>
+                    Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
+                </Button>
+             
                 <Table  bordered hover>
                     <tr>
                         <th>Symbol</th>
@@ -126,6 +128,7 @@ const SummaryTable = (props)=>{
                             
                         </tbody>
                 </Table>
+                </div>
             )
             }
 
