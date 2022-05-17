@@ -91,16 +91,14 @@ const Chart = (props) =>{
     }
     return(
         <div>
-            <Card style = {{margin:'1.5rem',padding:"2.5rem", float:'center'}}>
-                <h1>{companyName}</h1>
-                <h3>{stock}</h3>
-                <h3>Current price: {currentPrice}</h3>
-            </Card>
-
-
             <Button variant = "primary" onClick={getCurrentPrice}>
                Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
             </Button>
+            <Card style = {{margin:'1.5rem',padding:"2.5rem", float:'center'}}>
+                <Card.Title>{companyName}</Card.Title>
+                <Card.Text>Ticker: {stock.toUpperCase()}</Card.Text>
+                <Card.Title>Current price: {currentPrice}</Card.Title>
+            </Card>
             <Form.Select onChange={udpateTimeFrame} >
                         <option selected value = "1D">1D</option>
                         <option value="5D">5D</option>
