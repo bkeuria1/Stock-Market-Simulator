@@ -5,11 +5,16 @@ const axios = require('axios')
 const router = express.Router()
 const User = require('../models/user')
 const Stock = require('../models/stock')
-const News = require('../models/news')
+const Symbols = require('../models/symbol')
+
+// const Symbols = require('../models/symbol')
 
 require('../passport.js')
 
 const {ensureAuth} = require('../middleware/ensureAuth');
+const { rawListeners } = require('../models/stock');
+// const db = process.env.DATABASE_URL
+// const Symbols = db.collection("stockTickers")
 const options = {
     headers: {
         'X-API-KEY': process.env.YF_API_KEY
@@ -66,11 +71,18 @@ router.get('/news',ensureAuth,async(req,res)=>{
 
 })
 
-router.post('/news',ensureAuth,async(req,res)=>{
-    console.log(req.body)
-    res.status.send(400)
+router.get('/autocomplete', ensureAuth, async(req,res)=>{
+    const query = req.query.query
+    const suggestionAmount = 5
+    try{
+        const results = await Symbols.find({$or: [{"Symbol": {'$regex': query, '$options': 'i'} }, 
+        {"Name":{'$regex':query, '$options':'i'}}]})
+        res.send(results.slice(0,suggestionAmount))
+    }catch(err){
+        console.log(err)
+        res.send(err).status(400)
+    }
 })
-
 
 
 module.exports = router
