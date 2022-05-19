@@ -51,10 +51,10 @@ const BuySellForm = (props)=>{
         }
       
         else if(e.target.id === 'buy'){
-        res = await axios.post("http://localhost:3001/sale/buy", targetStock,{withCredentials:true})
-        updatedMessage = { message :`Your purchase of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
-        await axios.post("http://localhost:3001/mail/sale",updatedMessage,{withCredentials:true})
-        setSell(true)
+          res = await axios.post("http://localhost:3001/sale/buy", targetStock,{withCredentials:true})
+          updatedMessage = { message :`Your purchase of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
+          await axios.post("http://localhost:3001/mail/sale",updatedMessage,{withCredentials:true})
+          setSell(true)
         
       }else if(e.target.id === 'sell'){
         res = await axios.patch("http://localhost:3001/sale/sell", targetStock,{withCredentials:true})

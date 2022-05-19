@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import Chart from './chart'
-import {Button,Form,Tabs,Tab} from 'react-bootstrap';
+import {Button,Form,Tabs,Tab,Table} from 'react-bootstrap';
 import News from './news';
 const SearchForm = (props)=>{
     const [query, setQuery] = useState('')
     const [suggestions,setSuggestions] = useState([])
     const [show,setShow] = useState(false)
     const stock = props.stock
+
     useEffect(()=>{
         if(query.length > 0){
             setShow(true)
@@ -17,15 +18,18 @@ const SearchForm = (props)=>{
             setShow(false)
         }
     },[query])
+
     const updateStock = (e)=>{
         e.preventDefault()
         setShow(false)
         props.setStock(query)
     }
+
     const getSuggestions = async()=>{
         const results = await axios.get(`http://localhost:3001/stock/autocomplete?query=${query}`,{withCredentials:true})
         setSuggestions(results.data)
     }
+
     return(
         <div style ={{float: 'left',width : "50%"}}>
             <Form onSubmit= {updateStock} >
@@ -40,16 +44,19 @@ const SearchForm = (props)=>{
                 
                 <div>
                     {show &&
-                        <div>
+                        <Table bordered hover>
+                            <tbody>
                         {suggestions.map(suggestion=>{
                             return (
-                                <li onClick = {()=>props.setStock(suggestion.Symbol)}>{suggestion.Name} {suggestion.Symbol}</li>
+                                <tr onClick={(e)=>props.setStock(suggestion.Symbol)}>
+                                <td>{suggestion.Name} {suggestion.Symbol}</td>
+                                </tr>
                             )
                         })}
-                        </div>
+                        </tbody>
+                        </Table>
                     }
                 </div>
-
             }
                 <div>
                     <Tabs className="mb-3">

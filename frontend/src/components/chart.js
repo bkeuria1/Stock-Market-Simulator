@@ -5,7 +5,7 @@ import axios from 'axios'
 import BuySellForm from './BuySellForm';
 import { Button, Form, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faRefresh } from '@fortawesome/free-solid-svg-icons'
+import {  faRefresh,faArrowDown, faArrownUp } from '@fortawesome/free-solid-svg-icons'
 const Chart = (props) =>{
     const [closingValues, setClosingValues] = useState({})
     const [dates, setDates] = useState([])
@@ -13,6 +13,8 @@ const Chart = (props) =>{
     const [timeFrame, setTimeFrame] = useState('1D')
     const [data,setData] = useState(null)
     const [companyName,setCompanyName] = useState('')
+    const [trend, setTrend] = useState({})
+
     const stock = props.stock
     useEffect(()=>{
         if(stock.length>0){
@@ -31,6 +33,17 @@ const Chart = (props) =>{
             parseData()
         }
       }, [JSON.stringify(data)])
+
+      useEffect(()=>{
+        if(closingValues[closingValues.length-1] - closingValues[0]>=0){
+            setTrend({icon: "faArrowUp", color : "green"})
+        }else{
+            setTrend({icon: "faArrowDown", color : "red"})
+        }
+        console.log("The trend is" + trend.icon)
+        console.log("The trend color is" + trend.color)
+
+      },[closingValues])
 
     const chartData = {
         labels: dates,
@@ -91,6 +104,7 @@ const Chart = (props) =>{
     }
     return(
         <div>
+            
             <Button variant = "primary" onClick={getCurrentPrice}>
                Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
             </Button>
@@ -98,6 +112,10 @@ const Chart = (props) =>{
                 <Card.Title>{companyName}</Card.Title>
                 <Card.Text>Ticker: {stock.toUpperCase()}</Card.Text>
                 <Card.Title>Current price: {currentPrice}</Card.Title>
+                <Card.Title>
+                    <FontAwesomeIcon icon={trend.icon} style = {{color: trend.color}}/>
+                    {closingValues[closingValues.lenght-1] - closingValues[0]} in the last {timeFrame}
+                </Card.Title>
             </Card>
             <Form.Select onChange={udpateTimeFrame} >
                         <option selected value = "1D">1D</option>

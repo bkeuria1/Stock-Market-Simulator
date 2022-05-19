@@ -19,8 +19,10 @@ router.post('/buy', ensureAuth,async(req,res)=>{
 
   }
   try{
-    const currentStock = await Stock.findOne({user:req.user, ticker:req.body.ticker})
+    const ticker = new RegExp(req.body.ticker,'i')
+    const currentStock = await Stock.findOne({user:req.user, ticker:ticker})
     if(currentStock){
+      console.log(currentStock)
       currentStock.quantity += req.body.quantity
       currentStock.total += req.body.total
       currentStock.save()
@@ -42,7 +44,8 @@ router.patch('/sell', ensureAuth, async(req,res)=>{
   const user = req.user
   
   try{
-    const currentStock = await Stock.findOne({user:req.user, ticker:req.body.ticker})
+    const ticker = new RegExp(req.body.ticker,'i')
+    const currentStock = await Stock.findOne({user:req.user, ticker:ticker})
     if(req.body.quantity>currentStock.quantity){
       return res.status(400).send()
       

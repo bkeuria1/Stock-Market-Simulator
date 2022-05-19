@@ -60,9 +60,7 @@ router.get('/news',ensureAuth,async(req,res)=>{
     const url = `https://api.marketaux.com/v1/news/all?symbols=${stock}&filter_entities=true&language=en&api_token=${process.env.NEWS_API_KEY}`
     try{
         const news = await axios.get(url)
-        //await axios.post(url,news)
-        res.send(news.data)
-        
+        res.send(news.data)   
     }catch(err){
         console.log(err)
         res.send(err).status(400)
@@ -74,9 +72,10 @@ router.get('/news',ensureAuth,async(req,res)=>{
 router.get('/autocomplete', ensureAuth, async(req,res)=>{
     const query = req.query.query
     const suggestionAmount = 5
+    const regex = new RegExp(`^${query}`,'i')
     try{
-        const results = await Symbols.find({$or: [{"Symbol": {'$regex': query, '$options': 'i'} }, 
-        {"Name":{'$regex':query, '$options':'i'}}]})
+        const results = await Symbols.find({$or: [{"Symbol": regex }, 
+        {"Name": regex}]})
         res.send(results.slice(0,suggestionAmount))
     }catch(err){
         console.log(err)
