@@ -1,5 +1,6 @@
 import React, {useState,useEffect,useContext} from 'react'
 import axios from 'axios'
+import './table.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UserStocksContext } from '../context/userStocksContext'
 import {  faRefresh } from '@fortawesome/free-solid-svg-icons'
@@ -77,9 +78,12 @@ const SummaryTable = (props)=>{
           setStockWithPrices(tempStockInfo)
     }
     return(
-        <div style={{ width: "50%",float: 'right', padding: '3rem'}}>
+        <div style={{ width: "45%",float: 'right', marginTop: '4.0rem'}}>
+            <Button variant = "primary" onClick={getCurrentPrices}>
+                Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
+            </Button>
 
-            <Card>
+            <Card style = {{marginTop :'1.5rem'}}>
             <Card.Body>
                <Card.Title>Balane Summary</Card.Title>
                 <Card.Text>
@@ -98,36 +102,32 @@ const SummaryTable = (props)=>{
             </Card>
           
             {stockWithPrices.length>0 && (
-                <div style = {{top: '5rem'}}>
-                <Button variant = "primary" onClick={getCurrentPrices}>
-                    Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
-                </Button>
-             
-                <Table  bordered hover>
-                    <tr>
-                        <th>Symbol</th>
-                        <th>Shares</th>
-                        <th>Total</th>
-                        <th>Average Purchase Price</th>
-                        <th>Current Price</th>
-                        <th>Gains/Loses</th>
-                    </tr>
-                        <tbody>
-                            {stockWithPrices.map(stock=>{
-                                    return(
-                                        <tr onClick={()=>props.setStock(stock.ticker)}>
-                                            <td>{stock.ticker}</td>
-                                            <td>{stock.quantity}</td>
-                                            <td>${stock.total}</td>
-                                            <td>${(stock.total/stock.quantity)}</td>
-                                            <td>{(stock.price)}</td>
-                                            <td>${(stock.price*stock.quantity-stock.total) }</td>
-                                        </tr>
-                                    )
-                                })}
-                            
-                        </tbody>
-                </Table>
+                <div style = {{marginTop: '2rem', overflowY: 'scroll', height: '500px'}}>
+                    <Table  bordered hover>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Shares</th>
+                            <th>Total</th>
+                            <th>Average Purchase Price</th>
+                            <th>Current Price</th>
+                            <th>Gains/Loses</th>
+                        </tr>
+                            <tbody>
+                                {stockWithPrices.reverse().map(stock=>{
+                                        return(
+                                            <tr onClick={()=>props.setStock(stock.ticker)}>
+                                                <td>{stock.ticker.toUpperCase()}</td>
+                                                <td>{stock.quantity}</td>
+                                                <td>${stock.total}</td>
+                                                <td>${(stock.total/stock.quantity)}</td>
+                                                <td>{stock.price}</td>
+                                                <td>${(stock.price*stock.quantity-stock.total) }</td>
+                                            </tr>
+                                        )
+                                    })}
+                                
+                            </tbody>
+                    </Table>
                 </div>
             )
             }

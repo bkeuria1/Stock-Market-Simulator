@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import Chart from './chart'
 import {Button,Form,Tabs,Tab,Table} from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faSearch } from '@fortawesome/free-solid-svg-icons'
 import News from './news';
 const SearchForm = (props)=>{
     const [query, setQuery] = useState('')
@@ -31,12 +33,12 @@ const SearchForm = (props)=>{
     }
 
     return(
-        <div style ={{float: 'left',width : "50%"}}>
+        <div style ={{float: 'left',width : "50%", padding: "1rem"}}>
             <Form onSubmit= {updateStock} >
                 <Form.Control type="text" placeholder = "Search for a Stock" onChange={(e)=>{setQuery(e.target.value)}}  value = {query}/>
                 
                 <Button id="search-button" type="submit" variant = "primary">
-                    <i class="bi bi-search"></i>
+                    <FontAwesomeIcon icon = {faSearch}></FontAwesomeIcon>
                 </Button>
             </Form>
             
@@ -48,7 +50,7 @@ const SearchForm = (props)=>{
                             <tbody>
                         {suggestions.map(suggestion=>{
                             return (
-                                <tr onClick={(e)=>props.setStock(suggestion.Symbol)}>
+                                <tr onClick={(e)=>{props.setStock(suggestion.Symbol);setShow(false); setQuery(`${suggestion.Name} ${suggestion.Symbol}`)}}>
                                 <td>{suggestion.Name} {suggestion.Symbol}</td>
                                 </tr>
                             )
@@ -60,17 +62,14 @@ const SearchForm = (props)=>{
             }
                 <div>
                     <Tabs className="mb-3">
-                    <Tab eventKey="Stock" title= {`${stock} News`}>
-                        <News stock = {stock}></News>        
+                        <Tab eventKey="Stock" title= {`${stock} News`}>
+                            <News stock = {stock}></News>        
                         </Tab>
                         <Tab eventKey="Chart" title="Chart">
-        
-                            <Chart stock = {stock}></Chart>
-                            
+                            <Chart stock = {stock}></Chart>  
                         </Tab>
                     </Tabs>   
-                </div>   
-            
+                </div>      
         </div>      
     )
 }

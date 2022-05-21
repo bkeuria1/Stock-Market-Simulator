@@ -54,7 +54,7 @@ const Dashboard = (props)=>{
        
         <div>
             {loggedIn ?
-                <div>
+                <div style = {{padding: "1.0rem"}}>
                     <Button href= {process.env.REACT_APP_SIGN_OUT_URL} variant = "danger" style = {{float:'right'}}>Log Out</Button> 
                     <BuyingPowerContext.Provider value = {{getBuyingPower, buyingPower}}>
                         <UserStocksContext.Provider value = {{getUserStocks,userStocks}}>

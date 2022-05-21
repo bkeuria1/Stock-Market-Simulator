@@ -4,7 +4,6 @@ import { Card } from "react-bootstrap";
 const News = (props)=>{
     const [articles, setArticles] = useState([])
     useEffect(()=>{
-        setArticles([])
         getNews()
     },[props.stock])
 
@@ -16,9 +15,9 @@ const News = (props)=>{
     return(
         <div>
             {articles?.length>0 &&(
-                <div>
+                <div style = {{overflowY: 'scroll', height: '800px'}}>
                 {articles.map(article=>(
-                    <Card style = {{margin : "5rem", padding: "4rem", justifyContent:'center'}}>
+                    <Card style = {{margin : "2rem", padding: "4rem", justifyContent:'center'}}>
                         <Card.Title>{article.title}</Card.Title>
                         <Card.Text>{article.source} {article.published_at}</Card.Text>
                         <Card.Text>Summary: {article.description}</Card.Text>

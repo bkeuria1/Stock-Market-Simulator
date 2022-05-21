@@ -5,20 +5,22 @@ import axios from 'axios'
 import BuySellForm from './BuySellForm';
 import { Button, Form, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faRefresh,faArrowDown, faArrownUp } from '@fortawesome/free-solid-svg-icons'
+import {  faRefresh,faArrowUp, faArrowDown} from '@fortawesome/free-solid-svg-icons'
+
 const Chart = (props) =>{
-    const [closingValues, setClosingValues] = useState({})
+    const [closingValues, setClosingValues] = useState([])
     const [dates, setDates] = useState([])
     const [currentPrice,setCurrentPrice] = useState(0)
     const [timeFrame, setTimeFrame] = useState('1D')
     const [data,setData] = useState(null)
-    const [companyName,setCompanyName] = useState('')
+    const [companyName,setCompanyName] = useState()
     const [trend, setTrend] = useState({})
 
     const stock = props.stock
     useEffect(()=>{
         if(stock.length>0){
             getStockData()
+            console.log(stock)
         }
     },[stock,timeFrame])
 
@@ -35,10 +37,12 @@ const Chart = (props) =>{
       }, [JSON.stringify(data)])
 
       useEffect(()=>{
+        console.log("Here is the closing values")
+        console.log(closingValues)
         if(closingValues[closingValues.length-1] - closingValues[0]>=0){
-            setTrend({icon: "faArrowUp", color : "green"})
+            setTrend({icon: faArrowUp, color : "green"})
         }else{
-            setTrend({icon: "faArrowDown", color : "red"})
+            setTrend({icon: faArrowDown, color : "red" })
         }
         console.log("The trend is" + trend.icon)
         console.log("The trend color is" + trend.color)
@@ -104,20 +108,20 @@ const Chart = (props) =>{
     }
     return(
         <div>
-            
-            <Button variant = "primary" onClick={getCurrentPrice}>
-               Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
-            </Button>
-            <Card style = {{margin:'1.5rem',padding:"2.5rem", float:'center'}}>
+            <Card style = {{marginLeft:'1.5rem', marginBottom:'1.5rem', float:'center', padding: '1.5rem'}}>
+                <Button variant = "primary" onClick={getCurrentPrice} style = {{width: "7rem", height: '3rem'}}>
+                    Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
+                </Button>
                 <Card.Title>{companyName}</Card.Title>
                 <Card.Text>Ticker: {stock.toUpperCase()}</Card.Text>
                 <Card.Title>Current price: {currentPrice}</Card.Title>
-                <Card.Title>
-                    <FontAwesomeIcon icon={trend.icon} style = {{color: trend.color}}/>
-                    {closingValues[closingValues.lenght-1] - closingValues[0]} in the last {timeFrame}
+                <Card.Title >
+                    <FontAwesomeIcon icon = {trend.icon} color = {trend.color}></FontAwesomeIcon>
+                    {(closingValues[closingValues.length-1] - closingValues[0]).toFixed(2)} in the last {timeFrame}
                 </Card.Title>
+                <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
             </Card>
-            <Form.Select onChange={udpateTimeFrame} >
+            <Form.Select onChange={udpateTimeFrame} style = {{width : '6rem', marginLeft: '1.5rem'}}>
                         <option selected value = "1D">1D</option>
                         <option value="5D">5D</option>
                         <option value="1M">1M</option>
@@ -125,14 +129,9 @@ const Chart = (props) =>{
                         <option value="1Y">1Y</option>
                         <option value= "MAX">MAX</option>
             </Form.Select>
-           
-            
-
+        
             {Object.keys(closingValues).length>0 &&
-                <div>
-                    <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
-                    <Line data = {chartData} options = {options}/>
-                </div>
+                <Line data = {chartData} options = {options}/> 
             }
         
         </div>
