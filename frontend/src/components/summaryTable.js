@@ -15,6 +15,19 @@ const SummaryTable = (props)=>{
     const [totalAssets,setTotalAssets] = useState(0)
     const {getUserStocks,userStocks} = useContext(UserStocksContext)
     const {getBuyingPower, buyingPower} = useContext(BuyingPowerContext)
+    const SECOND = 1000
+    const MINUTES = SECOND * 60
+    //refresh table every 10 minutes
+    useEffect(()=>{
+        const timeId = setTimeout(() => {
+          // After 3 seconds set the show value to false
+          getCurrentPrices()
+        }, MINUTES * 10)
+  
+        return () => {
+          clearTimeout(timeId)
+        }
+     })
 
     useEffect(()=>{
         setCurrentPrices([])
@@ -25,14 +38,11 @@ const SummaryTable = (props)=>{
 
     useEffect(()=>{
         if(userStocks.length>0){
-            addPrice()
-            console.log("Add price called")
-             
+            addPrice()     
         } 
     },[JSON.stringify(currentPrices)])
 
     useEffect(()=>{
-        console.log("Get total called")
         getTotals()
     },[JSON.stringify(stockWithPrices)])
 
@@ -56,15 +66,15 @@ const SummaryTable = (props)=>{
             })
            
             
-            const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
+            //const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
             let tempPrices = []
-            // for( let i = 0; i<15; i++){
-            //     tempPrices.push(Math.random())
-            // }
-            res.data.data.forEach(stock=>{
-                console.log(stock.attributes.last)
-                tempPrices.push(stock.attributes.last)
-            })
+            for( let i = 0; i<20; i++){
+                tempPrices.push(Math.random())
+            }
+            // res.data.data.forEach(stock=>{
+            //     console.log(stock.attributes.last)
+            //     tempPrices.push(stock.attributes.last)
+            // })
             setCurrentPrices(tempPrices)
         }
     }
@@ -78,7 +88,7 @@ const SummaryTable = (props)=>{
           setStockWithPrices(tempStockInfo)
     }
     return(
-        <div style={{ width: "45%",float: 'right', marginTop: '4.0rem'}}>
+        <div style={{ width: "40%",float: 'right', marginTop: '4.0rem'}}>
             <Button variant = "primary" onClick={getCurrentPrices}>
                 Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
             </Button>
@@ -89,14 +99,14 @@ const SummaryTable = (props)=>{
                 <Card.Text>
                     Cash Balance: {buyingPower}
                 </Card.Text>
-                <Card.Text>
-                    Total Gains/Loses: {totalGains}
+                <Card.Text style = {{color: totalGains>0 ? 'green': 'red'}}>
+                    Total Gains/Loses: {totalGains.toFixed(2)}
                 </Card.Text>
                 <Card.Text>
                     Total Assets: {totalAssets}
                 </Card.Text>
-                <Card.Text>
-                    Total Balance: {totalAssets+buyingPower+totalGains}
+                <Card.Text style = {{fontWeight:'bold'}}>
+                    Total Balance: {(totalAssets+buyingPower+totalGains).toFixed(2)}
                 </Card.Text>
             </Card.Body>
             </Card>
@@ -121,7 +131,7 @@ const SummaryTable = (props)=>{
                                                 <td>${stock.total}</td>
                                                 <td>${(stock.total/stock.quantity)}</td>
                                                 <td>{stock.price}</td>
-                                                <td>${(stock.price*stock.quantity-stock.total) }</td>
+                                                <td style ={{color: stock.price*stock.quantity-stock.total>0 ? 'green' : 'red'}}>${(stock.price*stock.quantity-stock.total).toFixed(2)}</td>
                                             </tr>
                                         )
                                     })}
