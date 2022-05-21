@@ -51,6 +51,7 @@ const Chart = (props) =>{
 
     const chartData = {
         labels: dates,
+        responsive: true,
         datasets: [{
             label:"Price",
             data: closingValues,
@@ -81,9 +82,7 @@ const Chart = (props) =>{
           setCompanyName(res.data.data[0].attributes.name)
     }
     const options = {
-        responsive: true, 
         maintainAspectRatio: true,
-        responsive: true,
         scales: {
             y: {
                 suggestedMin: Math.min(Object.keys(closingValues)),
@@ -108,32 +107,39 @@ const Chart = (props) =>{
     }
     return(
         <div>
-            <Card style = {{marginLeft:'1.5rem', marginBottom:'1.5rem', float:'center', padding: '1.5rem'}}>
-                <Button variant = "primary" onClick={getCurrentPrice} style = {{width: "7rem", height: '3rem'}}>
+            <Card style = {{marginLeft:'1.5rem', float:'center', paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
+                <Button variant = "primary" onClick={getCurrentPrice} style = {{width: "7rem", height: '2.5rem', marginBottom: '1rem', marginTop: '1rem'}}>
                     Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
                 </Button>
-                <Card.Title>{companyName}</Card.Title>
-                <Card.Text>Ticker: {stock.toUpperCase()}</Card.Text>
-                <Card.Title>Current price: {currentPrice}</Card.Title>
-                <Card.Title >
-                    <FontAwesomeIcon icon = {trend.icon} color = {trend.color}></FontAwesomeIcon>
-                    {(closingValues[closingValues.length-1] - closingValues[0]).toFixed(2)} in the last {timeFrame}
-                </Card.Title>
+                <div style = {{width: '40%'}}>
+                    <Card.Title>{companyName}</Card.Title>
+                    <Card.Text>Ticker: {stock.toUpperCase()}</Card.Text>
+                </div>
+                <div style = {{position:'relative', marginLeft:'30rem', top:'-5rem'}}>
+                    <Card.Title>Current price: {currentPrice}</Card.Title>
+                    <Card.Title >
+                        <FontAwesomeIcon icon = {trend.icon} color = {trend.color}></FontAwesomeIcon>
+                        {(closingValues[closingValues.length-1] - closingValues[0]).toFixed(2)} in the last {timeFrame}
+                    </Card.Title>
+                </div>
+                <div  style = {{position:'relative', top:'-4rem'}}>
                 <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
-            </Card>
-            <Form.Select onChange={udpateTimeFrame} style = {{width : '6rem', marginLeft: '1.5rem'}}>
+                {Object.keys(closingValues).length>0 &&
+                <div >
+                    <Form.Select onChange={udpateTimeFrame} style = {{width : '6rem', marginTop: '1rem'}}>
                         <option selected value = "1D">1D</option>
                         <option value="5D">5D</option>
                         <option value="1M">1M</option>
                         <option value="3M">3M</option>
                         <option value="1Y">1Y</option>
                         <option value= "MAX">MAX</option>
-            </Form.Select>
-        
-            {Object.keys(closingValues).length>0 &&
-                <Line data = {chartData} options = {options}/> 
+                    </Form.Select>
+                    <Line  data = {chartData} options = {options}/> 
+                </div>
+                
             }
-        
+            </div>
+            </Card>
         </div>
     )
 }
