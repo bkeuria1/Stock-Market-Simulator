@@ -66,15 +66,15 @@ const SummaryTable = (props)=>{
             })
            
             
-            //const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
+            const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
             let tempPrices = []
-            for( let i = 0; i<20; i++){
-                tempPrices.push(Math.random())
-            }
-            // res.data.data.forEach(stock=>{
-            //     console.log(stock.attributes.last)
-            //     tempPrices.push(stock.attributes.last)
-            // })
+            // for( let i = 0; i<20; i++){
+            //     tempPrices.push(Math.random())
+            // }
+            res.data.data.forEach(stock=>{
+                console.log(stock.attributes.last)
+                tempPrices.push(stock.attributes.last)
+            })
             setCurrentPrices(tempPrices)
         }
     }
