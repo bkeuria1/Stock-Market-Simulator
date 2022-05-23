@@ -107,7 +107,7 @@ const Chart = (props) =>{
     }
     return(
         <div>
-            <Card style = {{marginLeft:'1.5rem', float:'center', paddingLeft: '1.5rem', paddingRight:'1.5rem'}}>
+            <Card style = {{marginLeft:'1.5rem', float:'center', paddingLeft: '1.5rem', paddingRight:'1.5rem',height:'730px'}}>
                 <Button variant = "primary" onClick={getCurrentPrice} style = {{width: "7rem", height: '2.5rem', marginBottom: '1rem', marginTop: '1rem'}}>
                     Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
                 </Button>

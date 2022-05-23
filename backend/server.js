@@ -52,4 +52,9 @@ app.use('/sale', saleRouter)
 app.use('/user', userRouter)
 app.use('/stock',stockRouter)
 app.use('/mail',mailRouter)
+
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('../frontend/build'))
+}
+
 app.listen(process.env.PORT || 3001)
