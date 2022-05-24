@@ -22,7 +22,7 @@ const Home = ()=>{
     }
 
     async function checkLogin(){
-        const result = await axios.get( 'http://localhost:3001/auth/loggedIn',  {withCredentials:true})
+        const result = await axios.get( loggedInURL,  {withCredentials:true})
         if(result.data.result){
           setLoggedIn(true)
         }else{
