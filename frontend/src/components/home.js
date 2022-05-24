@@ -5,15 +5,20 @@ import Dashboard from './dashboard'
 const Home = ()=>{
 
     let signInURL
-    const [loggedIn,setLoggedIn] = useState(true)
+    let loggedInURL
+    const [loggedIn,setLoggedIn] = useState(false)
+
     useEffect(()=>{
         checkLogin()
     },[loggedIn])
     if(process.env.REACT_APP_MODE === 'dev'){
         signInURL = process.env.REACT_APP_SIGN_IN_URL_DEV
+        loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_DEV
+
         console.log(signInURL)
     }else if(process.env.REACT_APP_MODE === 'production'){
         signInURL = process.env.REACT_APP_SIGN_IN_URL_PRODUCTION
+        loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_PROD
     }
 
     async function checkLogin(){
