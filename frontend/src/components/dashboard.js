@@ -12,6 +12,23 @@ const Dashboard = (props)=>{
     const [userStocks,setUserStocks] = useState([])
     //const buyingPowerContext = [buyingPower,setBuyingPower]
     // const userStocksContext = [userStocks,setUserStocks]
+    let loggedInURL
+    let userStocksURL
+    let buyingPowerURL
+    let logoutURL
+
+    if(process.env.MODE === 'dev'){
+        loggedInUrl = process.env.REACT_APP_LOGGEDIN_URL_DEV
+        userStocksURL = process.env.REACT_APP_USERSTOCK_URL_DEV
+        buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_DEV
+        logoutURL = process.env.REACT_APP_SIGN_OUT_URL_DEV
+    } else if(process.env.MODE === 'prod'){
+        loggedInUrl = process.env.REACT_APP_LOGGEDIN_URL_PROD
+        userStocksURL = process.env.REACT_APP_USERSTOCK_URL_PROD
+        buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_PROD
+        logoutURL = process.env.REACT_APP_SIGN_OUT_URL_PROD
+
+    }
     useEffect(()=>{
         getBuyingPower()
     },[])
@@ -25,7 +42,7 @@ const Dashboard = (props)=>{
     },[loggedIn])
     
     async function checkLogin(){
-      const result = await axios.get( 'http://localhost:3001/auth/loggedIn',  {withCredentials:true})
+      const result = await axios.get( loggedInURL,  {withCredentials:true})
       if(result.data.result){
         setLoggedIn(true)
       }else{
@@ -35,7 +52,7 @@ const Dashboard = (props)=>{
     //updates the query
 
     const getBuyingPower = async(e)=>{
-        const res = await axios.get('http://localhost:3001/user/buyingPower', {withCredentials:true})
+        const res = await axios.get(buyingPowerURL, {withCredentials:true})
         setBuyingPower(res.data.buyingPower)
     }
    
@@ -44,7 +61,7 @@ const Dashboard = (props)=>{
     }
 
     const getUserStocks = async()=>{
-        const res = await axios.get('http://localhost:3001/stock/userStocks',{withCredentials:true})
+        const res = await axios.get(userStocksURL,{withCredentials:true})
         console.log("User stocks called")
         setUserStocks(res.data)
     }
@@ -55,7 +72,7 @@ const Dashboard = (props)=>{
         <div>
             {loggedIn ?
                 <div style = {{padding: "1.0rem"}}>
-                    <Button href= {process.env.REACT_APP_SIGN_OUT_URL} variant = "danger" style = {{float:'right'}}>Log Out</Button> 
+                    <Button href= {logoutURL} variant = "danger" style = {{float:'right'}}>Log Out</Button> 
                     <BuyingPowerContext.Provider value = {{getBuyingPower, buyingPower}}>
                         <UserStocksContext.Provider value = {{getUserStocks,userStocks}}>
                             <SearchForm stock = {stock} setStock = {setStock}></SearchForm> {/*Contains SearchForm->Chart->BuySellForm */}
