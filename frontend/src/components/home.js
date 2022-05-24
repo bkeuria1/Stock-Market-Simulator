@@ -5,7 +5,7 @@ import Dashboard from './dashboard'
 const Home = ()=>{
 
     let signInURL
-    const [loggedIn,setLoggedIn] = useState(false)
+    const [loggedIn,setLoggedIn] = useState(true)
     useEffect(()=>{
         checkLogin()
     },[loggedIn])
