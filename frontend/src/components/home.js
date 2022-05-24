@@ -11,7 +11,7 @@ const Home = ()=>{
         <Card style = {{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh', width: '100%'}}>
             <h1>Welcome to the Stock Market Application!</h1>
             <h2>Please sign in to continue</h2>    
-            <Button href = {process.env.REACT_APP_SIGN_IN_URL} variant = "primary">Sign in</Button>
+            <Button href = {signInUrl} variant = "primary">Sign in</Button>
         </Card>
         
     )
