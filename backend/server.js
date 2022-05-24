@@ -54,7 +54,6 @@ app.use('/stock',stockRouter)
 app.use('/mail',mailRouter)
 
 if(process.env.NODE_ENV === 'production'){
-  require('dotenv').config()
   app.use(express.static('../frontend/build'))
 }
 

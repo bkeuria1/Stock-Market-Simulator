@@ -20,17 +20,17 @@ router.get('/google/callback', passport.authenticate('google'
 , { 
   failureRedirect: '/failed' }
 ),(req,res)=>{
-    res.redirect("http://localhost:3000/dashboard");
+    res.redirect(process.env.REDIRECT_URL);
 })
   
 //Logout
 router.get('/logout', ensureAuth, (req, res) => {
   try{
     req.logout();
-    res.redirect('http://localhost:3000')
+    res.redirect(process.env.HOME_URL)
   }
   catch(err){
-    res.redirect('http://localhost:3000')
+    res.redirect(process.env.HOME_URL)
   }
     
 })
