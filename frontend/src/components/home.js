@@ -8,7 +8,7 @@ const Home = ()=>{
     const [loggedIn,setLoggedIn] = useState(false)
     useEffect(()=>{
         checkLogin()
-    },[])
+    },[loggedIn])
     if(process.env.REACT_APP_MODE === 'dev'){
         signInURL = process.env.REACT_APP_SIGN_IN_URL_DEV
         console.log(signInURL)
