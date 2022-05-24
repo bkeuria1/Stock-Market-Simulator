@@ -11,13 +11,14 @@ import {
 
 function App() {
   return (
+    <Home></Home>
     
-    <Router>   
-      <Routes>
-        <Route path = '/' element={< Home />}/>
-          <Route path = "/dashboard" element={<Dashboard />}/>
-      </Routes>  
-    </Router>
+    // <Router>   
+    //   <Routes>
+    //     <Route path = '/' element={< Home />}/>
+    //       <Route path = "/dashboard" element={<Dashboard />}/>
+    //   </Routes>  
+    // </Router>
 
   )
 }
