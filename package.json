@@ -10,9 +10,6 @@
     "install-frontend": "cd frontend && npm install",
     "heroku-postbuild": "npm run install-frontend && npm run build"
   },
-  "engines": {
-    "node": "10.16.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bkeuria1/Stock-Market-Simulator.git"
