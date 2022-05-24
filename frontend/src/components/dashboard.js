@@ -66,7 +66,7 @@ const Dashboard = (props)=>{
                 :
                 <div>
                 <h1>You need to be logged in to access the dashboard</h1>
-                <a href = {process.env.REACT_APP_SIGN_IN_URL} class = "btn btn-primary">Sign in</a> 
+                <a href = {process.env.REACT_APP_SIGN_IN_URL_PROD} class = "btn btn-primary">Sign in</a> 
                 </div>
             }
        

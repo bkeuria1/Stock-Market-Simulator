@@ -23,6 +23,7 @@ const Home = ()=>{
 
     async function checkLogin(){
         const result = await axios.get( loggedInURL,  {withCredentials:true})
+        console.log(loggedInURL)
         if(result.data.result){
           setLoggedIn(true)
         }else{
