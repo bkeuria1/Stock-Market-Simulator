@@ -18,12 +18,12 @@ const Dashboard = (props)=>{
     let logoutURL
 
     if(process.env.MODE === 'dev'){
-        loggedInUrl = process.env.REACT_APP_LOGGEDIN_URL_DEV
+        loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_DEV
         userStocksURL = process.env.REACT_APP_USERSTOCK_URL_DEV
         buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_DEV
         logoutURL = process.env.REACT_APP_SIGN_OUT_URL_DEV
     } else if(process.env.MODE === 'prod'){
-        loggedInUrl = process.env.REACT_APP_LOGGEDIN_URL_PROD
+        loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_PROD
         userStocksURL = process.env.REACT_APP_USERSTOCK_URL_PROD
         buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_PROD
         logoutURL = process.env.REACT_APP_SIGN_OUT_URL_PROD
