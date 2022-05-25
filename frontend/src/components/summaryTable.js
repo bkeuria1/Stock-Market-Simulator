@@ -20,9 +20,9 @@ const SummaryTable = (props)=>{
 
     let realTimePriceURL
     if(process.env.REACT_APP_MODE === 'dev'){
-        realTimePriceURL = REACT_APP_REALTIME_URL_DEV
+        realTimePriceURL = process.env.REACT_APP_REALTIME_URL_DEV
     }else{
-        realTimePriceURL = REACT_APP_REALTIME_URL_PROD
+        realTimePriceURL = process.env.REACT_APP_REALTIME_URL_PROD
     }
     //refresh table every 10 minutes
     useEffect(()=>{
