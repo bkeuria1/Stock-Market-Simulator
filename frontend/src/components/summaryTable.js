@@ -119,7 +119,8 @@ const SummaryTable = (props)=>{
             </Card>
           
             {stockWithPrices.length>0 && (
-                <div style = {{marginTop: '2rem', overflowY: 'scroll', height: '500px'}}>
+                <div> 
+                {/* style = {{marginTop: '2rem', overflowY: 'scroll', height: '500px'}} */}
                     <Table  bordered hover>
                         <tr>
                             <th>Symbol</th>
@@ -130,7 +131,7 @@ const SummaryTable = (props)=>{
                             <th>Gains/Loses</th>
                         </tr>
                             <tbody>
-                                {stockWithPrices.reverse().map(stock=>{
+                                {stockWithPrices.map(stock=>{
                                         return(
                                             <tr onClick={()=>props.setStock(stock.ticker)}>
                                                 <td>{stock.ticker.toUpperCase()}</td>
