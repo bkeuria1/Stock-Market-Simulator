@@ -10,6 +10,7 @@ const Dashboard = (props)=>{
     const [loggedIn, setLoggedIn] = useState(false)
     const [buyingPower,setBuyingPower] = useState(0)
     const [userStocks,setUserStocks] = useState([])
+    const [signOutUrl, setSignOutUrl] = useState('')
     //const buyingPowerContext = [buyingPower,setBuyingPower]
     // const userStocksContext = [userStocks,setUserStocks]
     let loggedInURL
@@ -25,7 +26,7 @@ const Dashboard = (props)=>{
             loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_DEV
             userStocksURL = process.env.REACT_APP_USERSTOCK_URL_DEV
             buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_DEV
-            logoutURL = process.env.REACT_APP_SIGN_OUT_URL_DEV
+            setSignOutUrl(process.env.REACT_APP_SIGN_OUT_URL_DEV)
             signInURL = process.env.REACT_APP_SIGN_IN_URL_DEV
     
         } else if(process.env.REACT_APP_MODE === 'prod'){
@@ -33,7 +34,7 @@ const Dashboard = (props)=>{
             loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_PROD
             userStocksURL = process.env.REACT_APP_USERSTOCK_URL_PROD
             buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_PROD
-            logoutURL = process.env.REACT_APP_SIGN_OUT_URL_PROD
+            setSignOutUrl(process.env.REACT_APP_SIGN_OUT_URL_PROD)
             signInURL = process.env.REACT_APP_SIGN_IN_URL_PROD
             
     
@@ -91,7 +92,7 @@ const Dashboard = (props)=>{
         <div>
            {/* // {loggedIn ? */}
                 <div style = {{padding: "1.0rem"}}>
-                    <Button onClick= {()=>console.log(logoutURL)} variant = "danger" style = {{float:'right'}}>Log Out</Button> 
+                    <Button href = {signOutUrl} variant = "danger" style = {{float:'right'}}>Log Out</Button> 
                     <BuyingPowerContext.Provider value = {{getBuyingPower, buyingPower}}>
                         <UserStocksContext.Provider value = {{getUserStocks,userStocks}}>
                             <SearchForm stock = {stock} setStock = {setStock}></SearchForm> {/*Contains SearchForm->Chart->BuySellForm */}

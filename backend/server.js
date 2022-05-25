@@ -13,10 +13,16 @@ const userRouter = require('./routes/user')
 const stockRouter = require('./routes/stock')
 const mailRouter = require('./routes/mail')
 require('./passport')(passport)
-let whitelist = ['http://localhost:3000','http://localhost:3000/new']
+let whitelist = ['http://localhost:3000','https://stock-market-simulator-mernapp.herokuapp.com']
 
 let corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   credentials:true
 }
 app.use(cors(corsOptions))
