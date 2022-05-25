@@ -119,8 +119,8 @@ const SummaryTable = (props)=>{
             </Card>
           
             {stockWithPrices.length>0 && (
-                <div style = {{marginTop: '2rem', overflowY: 'scroll'}}> 
-                {/* style = {{marginTop: '2rem', overflowY: 'scroll', height: '500px'}} */}
+                <div style = {{marginTop: '2rem', overflowY: 'scroll', height: "20rem"}}> 
+                {/* style = {{marginTop: '2rem', overflowY: 'scroll', }} */}
                     <Table  bordered hover>
                         <tr>
                             <th>Symbol</th>
