@@ -18,22 +18,31 @@ const Dashboard = (props)=>{
     let logoutURL
     let signInURL
 
-    if(process.env.MODE === 'dev'){
-        loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_DEV
-        userStocksURL = process.env.REACT_APP_USERSTOCK_URL_DEV
-        buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_DEV
-        logoutURL = process.env.REACT_APP_SIGN_OUT_URL_DEV
-        signInURL = process.env.REACT_APP_SIGN_IN_URL_DEV
-
-    } else if(process.env.MODE === 'prod'){
-        loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_PROD
-        userStocksURL = process.env.REACT_APP_USERSTOCK_URL_PROD
-        buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_PROD
-        logoutURL = process.env.REACT_APP_SIGN_OUT_URL_PROD
-        signInURL = process.env.REACT_APP_SIGN_IN_URL_PROD
+    useEffect(()=>{
+        console.log("HEY THERE DAWG")
+        if(process.env.REACT_APP_MODE === 'dev'){
+            console.log("IN Dev mode")
+            loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_DEV
+            userStocksURL = process.env.REACT_APP_USERSTOCK_URL_DEV
+            buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_DEV
+            logoutURL = process.env.REACT_APP_SIGN_OUT_URL_DEV
+            signInURL = process.env.REACT_APP_SIGN_IN_URL_DEV
+    
+        } else if(process.env.REACT_APP_MODE === 'prod'){
+            console.log("in prod mode")
+            loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_PROD
+            userStocksURL = process.env.REACT_APP_USERSTOCK_URL_PROD
+            buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_PROD
+            logoutURL = process.env.REACT_APP_SIGN_OUT_URL_PROD
+            signInURL = process.env.REACT_APP_SIGN_IN_URL_PROD
+            
+    
+        }
         console.log(logoutURL+" is the logout url")
 
-    }
+    },[])
+
+
     useEffect(()=>{
         getBuyingPower()
     },[])
@@ -82,7 +91,7 @@ const Dashboard = (props)=>{
         <div>
            {/* // {loggedIn ? */}
                 <div style = {{padding: "1.0rem"}}>
-                    <Button href= {logoutURL} variant = "danger" style = {{float:'right'}}>Log Out</Button> 
+                    <Button onClick= {()=>console.log(logoutURL)} variant = "danger" style = {{float:'right'}}>Log Out</Button> 
                     <BuyingPowerContext.Provider value = {{getBuyingPower, buyingPower}}>
                         <UserStocksContext.Provider value = {{getUserStocks,userStocks}}>
                             <SearchForm stock = {stock} setStock = {setStock}></SearchForm> {/*Contains SearchForm->Chart->BuySellForm */}
