@@ -16,13 +16,7 @@ require('./passport')(passport)
 let whitelist = ['http://localhost:3000','https://stock-market-simulator-mernapp.herokuapp.com']
 
 let corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
+  origin: 'http://localhost:3000',
   credentials:true
 }
 app.use(cors(corsOptions))
