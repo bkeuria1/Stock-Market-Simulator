@@ -17,6 +17,13 @@ const SummaryTable = (props)=>{
     const {getBuyingPower, buyingPower} = useContext(BuyingPowerContext)
     const SECOND = 1000
     const MINUTES = SECOND * 60
+
+    let realTimePriceURL
+    if(process.env.REACT_APP_MODE === 'dev'){
+        realTimePriceURL = REACT_APP_REALTIME_URL_DEV
+    }else{
+        realTimePriceURL = REACT_APP_REALTIME_URL_PROD
+    }
     //refresh table every 10 minutes
     useEffect(()=>{
         const timeId = setTimeout(() => {
@@ -66,7 +73,7 @@ const SummaryTable = (props)=>{
             })
            
             
-            const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${queryString}`,{withCredentials:true})
+            const res = await axios.get(`${realTimePriceURL}?stock=${queryString}`,{withCredentials:true})
             let tempPrices = []
             // for( let i = 0; i<20; i++){
             //     tempPrices.push(Math.random())
