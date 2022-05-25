@@ -25,16 +25,16 @@ const SummaryTable = (props)=>{
         realTimePriceURL = process.env.REACT_APP_REALTIME_URL_PROD
     }
     //refresh table every 10 minutes
-    useEffect(()=>{
-        const timeId = setTimeout(() => {
-          // After 3 seconds set the show value to false
-          getCurrentPrices()
-        }, MINUTES * 10)
+    // useEffect(()=>{
+    //     const timeId = setTimeout(() => {
+    //       // After 3 seconds set the show value to false
+    //       getCurrentPrices()
+    //     }, MINUTES * 10)
   
-        return () => {
-          clearTimeout(timeId)
-        }
-     })
+    //     return () => {
+    //       clearTimeout(timeId)
+    //     }
+    //  })
 
     useEffect(()=>{
         setCurrentPrices([])
