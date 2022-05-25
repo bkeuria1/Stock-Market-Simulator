@@ -16,17 +16,20 @@ const Dashboard = (props)=>{
     let userStocksURL
     let buyingPowerURL
     let logoutURL
+    let signInURL
 
     if(process.env.MODE === 'dev'){
         loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_DEV
         userStocksURL = process.env.REACT_APP_USERSTOCK_URL_DEV
         buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_DEV
         logoutURL = process.env.REACT_APP_SIGN_OUT_URL_DEV
+        signInURL = process.env.REACT_APP_SIGN_IN_URL_DEV
     } else if(process.env.MODE === 'prod'){
         loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_PROD
         userStocksURL = process.env.REACT_APP_USERSTOCK_URL_PROD
         buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_PROD
         logoutURL = process.env.REACT_APP_SIGN_OUT_URL_PROD
+        signInURL = process.env.REACT_APP_SIGN_IN_URL_PROD
 
     }
     useEffect(()=>{
@@ -42,12 +45,14 @@ const Dashboard = (props)=>{
     },[loggedIn])
     
     async function checkLogin(){
-      const result = await axios.get( loggedInURL,  {withCredentials:true})
-      if(result.data.result){
+        console.log(lo)
+        
+        const result = await axios.get( loggedInURL,  {withCredentials:true})
+        if(result.data.result){
         setLoggedIn(true)
-      }else{
+        }else{
         setLoggedIn(false)
-      }
+        }
     }
     //updates the query
 
@@ -83,7 +88,7 @@ const Dashboard = (props)=>{
                 :
                 <div>
                 <h1>You need to be logged in to access the dashboard</h1>
-                <a href = {process.env.REACT_APP_SIGN_IN_URL_PROD} class = "btn btn-primary">Sign in</a> 
+                <a href = {signInURL} class = "btn btn-primary">Sign in</a> 
                 </div>
             }
        
