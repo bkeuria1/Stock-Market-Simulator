@@ -24,6 +24,7 @@ const Dashboard = (props)=>{
         buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_DEV
         logoutURL = process.env.REACT_APP_SIGN_OUT_URL_DEV
         signInURL = process.env.REACT_APP_SIGN_IN_URL_DEV
+
     } else if(process.env.MODE === 'prod'){
         loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_PROD
         userStocksURL = process.env.REACT_APP_USERSTOCK_URL_PROD
@@ -41,11 +42,12 @@ const Dashboard = (props)=>{
     },[])
       
     useEffect (()=>{
+        console.log("use effect in dashboard called")
         checkLogin()
     },[loggedIn])
     
     async function checkLogin(){
-        console.log(lo)
+        console.log(loggedInURL)
         
         const result = await axios.get( loggedInURL,  {withCredentials:true})
         if(result.data.result){
@@ -75,7 +77,7 @@ const Dashboard = (props)=>{
     return (
        
         <div>
-            {loggedIn ?
+           {/* // {loggedIn ? */}
                 <div style = {{padding: "1.0rem"}}>
                     <Button href= {logoutURL} variant = "danger" style = {{float:'right'}}>Log Out</Button> 
                     <BuyingPowerContext.Provider value = {{getBuyingPower, buyingPower}}>
@@ -85,12 +87,12 @@ const Dashboard = (props)=>{
                         </UserStocksContext.Provider> 
                     </BuyingPowerContext.Provider>   
                 </div>
-                :
+                {/* :
                 <div>
                 <h1>You need to be logged in to access the dashboard</h1>
                 <a href = {signInURL} class = "btn btn-primary">Sign in</a> 
-                </div>
-            }
+                </div> */}
+            {/* //} */}
        
 
         </div>

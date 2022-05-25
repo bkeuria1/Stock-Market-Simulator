@@ -9,19 +9,22 @@ const Home = ()=>{
     const [loggedIn,setLoggedIn] = useState(false)
 
     useEffect(()=>{
+        console.log("Use Effect being called")
         checkLogin()
     },[loggedIn])
+
     if(process.env.REACT_APP_MODE === 'dev'){
         signInURL = process.env.REACT_APP_SIGN_IN_URL_DEV
         loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_DEV
 
-        console.log(signInURL)
+        
     }else if(process.env.REACT_APP_MODE === 'prod'){
-        signInURL = process.env.REACT_APP_SIGN_IN_URL_PRODUCTION
+        signInURL = process.env.REACT_APP_SIGN_IN_URL_PROD
         loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_PROD
     }
 
     async function checkLogin(){
+        console.log(signInURL)
         const result = await axios.get( loggedInURL,  {withCredentials:true})
         console.log(loggedInURL)
         if(result.data.result){
