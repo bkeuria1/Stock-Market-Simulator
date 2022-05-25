@@ -39,10 +39,12 @@ const Dashboard = (props)=>{
 
     useEffect(()=>{
         getUserStocks()
+        console.log(logoutURL)
     },[])
       
     useEffect (()=>{
         console.log("use effect in dashboard called")
+    
         checkLogin()
     },[loggedIn])
     
