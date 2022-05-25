@@ -31,6 +31,7 @@ const Dashboard = (props)=>{
         buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_PROD
         logoutURL = process.env.REACT_APP_SIGN_OUT_URL_PROD
         signInURL = process.env.REACT_APP_SIGN_IN_URL_PROD
+        console.log(logoutURL+" is the logout url")
 
     }
     useEffect(()=>{
@@ -39,7 +40,7 @@ const Dashboard = (props)=>{
 
     useEffect(()=>{
         getUserStocks()
-        console.log(logoutURL)
+        
     },[])
       
     useEffect (()=>{
