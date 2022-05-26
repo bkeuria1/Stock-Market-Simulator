@@ -25,13 +25,13 @@ const Chart = (props) =>{
     },[stock,timeFrame])
 
     useEffect(()=>{
-        if(stock.length>0){
+        if(stock.length>0 && data !== null){
             getCurrentPrice()
         }
     },[stock])
     
     useEffect (()=>{
-        if(stock.length>0){
+        if(stock.length>0 && data !== null){
             parseData()
         }
       }, [JSON.stringify(data)])
@@ -107,39 +107,49 @@ const Chart = (props) =>{
     }
     return(
         <div>
-            <Card style = {{marginLeft:'1.5rem', float:'center', paddingLeft: '1.5rem', paddingRight:'1.5rem',height:'730px'}}>
-                <Button variant = "primary" onClick={getCurrentPrice} style = {{width: "7rem", height: '2.5rem', marginBottom: '1rem', marginTop: '1rem'}}>
-                    Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
-                </Button>
-                <div style = {{width: '40%'}}>
-                    <Card.Title>{companyName}</Card.Title>
-                    <Card.Text>Ticker: {stock.toUpperCase()}</Card.Text>
+            {data !== null ?
+                <div>
+
+                    <Card style = {{marginLeft:'1.5rem', float:'center', paddingLeft: '1.5rem', paddingRight:'1.5rem',height:'730px'}}>
+                        <Button variant = "primary" onClick={getCurrentPrice} style = {{width: "7rem", height: '2.5rem', marginBottom: '1rem', marginTop: '1rem'}}>
+                            Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
+                        </Button>
+                        <div style = {{width: '40%'}}>
+                            <Card.Title>{companyName}</Card.Title>
+                            <Card.Text>Ticker: {stock.toUpperCase()}</Card.Text>
+                        </div>
+                        <div style = {{position:'relative', marginLeft:'30rem', top:'-5rem'}}>
+                            <Card.Title>Current price: {currentPrice}</Card.Title>
+                            <Card.Title >
+                                <FontAwesomeIcon icon = {trend.icon} color = {trend.color}></FontAwesomeIcon>
+                                {(closingValues[closingValues.length-1] - closingValues[0]).toFixed(2)} in the last {timeFrame}
+                            </Card.Title>
+                        </div>
+                        <div style = {{position:'relative', top:'-4rem'}}>
+                            <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
+                            {Object.keys(closingValues).length>0 &&
+                            <div >
+                                <Form.Select onChange={udpateTimeFrame} style = {{width : '6rem', marginTop: '1rem'}}>
+                                    <option selected value = "1D">1D</option>
+                                    <option value="5D">5D</option>
+                                    <option value="1M">1M</option>
+                                    <option value="3M">3M</option>
+                                    <option value="1Y">1Y</option>
+                                    <option value= "MAX">MAX</option>
+                                </Form.Select>
+                                <Line  data = {chartData} options = {options}/> 
+                            </div>
+                            
+                            }
+                        </div>
+                    </Card>
                 </div>
-                <div style = {{position:'relative', marginLeft:'30rem', top:'-5rem'}}>
-                    <Card.Title>Current price: {currentPrice}</Card.Title>
-                    <Card.Title >
-                        <FontAwesomeIcon icon = {trend.icon} color = {trend.color}></FontAwesomeIcon>
-                        {(closingValues[closingValues.length-1] - closingValues[0]).toFixed(2)} in the last {timeFrame}
-                    </Card.Title>
-                </div>
-                <div  style = {{position:'relative', top:'-4rem'}}>
-                <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
-                {Object.keys(closingValues).length>0 &&
-                <div >
-                    <Form.Select onChange={udpateTimeFrame} style = {{width : '6rem', marginTop: '1rem'}}>
-                        <option selected value = "1D">1D</option>
-                        <option value="5D">5D</option>
-                        <option value="1M">1M</option>
-                        <option value="3M">3M</option>
-                        <option value="1Y">1Y</option>
-                        <option value= "MAX">MAX</option>
-                    </Form.Select>
-                    <Line  data = {chartData} options = {options}/> 
-                </div>
-                
-            }
+            :
+            <div>
+                <h1>No Data found - please enter a valid stock</h1>
             </div>
-            </Card>
+
+            }
         </div>
     )
 }

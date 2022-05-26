@@ -52,7 +52,7 @@ const SummaryTable = (props)=>{
        let tempTotalGains = 0
        let tempTotalAssets = 0
        stockWithPrices.forEach(stock=>{
-            tempTotalAssets += stock.total
+            tempTotalAssets += (stock.total + (stock.price*stock.quantity-stock.total))
             tempTotalGains += stock.price*stock.quantity-stock.total
        })
        setTotalGains(tempTotalGains)
@@ -107,7 +107,7 @@ const SummaryTable = (props)=>{
                     Total Assets: {totalAssets}
                 </Card.Text>
                 <Card.Text style = {{fontWeight:'bold'}}>
-                    Total Balance: {(totalAssets+buyingPower+totalGains).toFixed(2)}
+                    Total Balance: {(totalAssets+buyingPower).toFixed(2)}
                 </Card.Text>
             </Card.Body>
             </Card>
@@ -129,7 +129,7 @@ const SummaryTable = (props)=>{
                                             <tr onClick={()=>props.setStock(stock.ticker)}>
                                                 <td>{stock.ticker.toUpperCase()}</td>
                                                 <td>{stock.quantity}</td>
-                                                <td>${(stock.total + stock.price*stock.quantity).toFixed(2)}</td>
+                                                <td>${(stock.total + (stock.price*stock.quantity-stock.total)).toFixed(2)}</td>
                                                 <td>${(stock.total/stock.quantity).toFixed(2)}</td>
                                                 <td>{stock.price}</td>
                                                 <td style ={{color: stock.price*stock.quantity-stock.total>0 ? 'green' : 'red'}}>${(stock.price*stock.quantity-stock.total).toFixed(2)}</td>
