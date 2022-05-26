@@ -14,7 +14,7 @@ const News = (props)=>{
     }
     return(
         <div>
-            {articles.length>0 ?
+            {articles?.length>0 ?
                 <div style = {{overflowY: 'scroll', height: '40rem'}}>
                     {articles.map(article=>(
                         <Card style = {{margin : "2rem", padding: "4rem", justifyContent:'center'}}>
