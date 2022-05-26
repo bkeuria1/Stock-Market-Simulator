@@ -92,7 +92,7 @@ const BuySellForm = (props)=>{
 
     const sendEmail = async(message)=>{
       try{
-        await axios.post(REACT_APP_MAIL_URL, message, {withCredentials:true})
+        await axios.post(process.env.REACT_APP_MAIL_URL, message, {withCredentials:true})
       }catch(err){
         console.log(err)
       }
