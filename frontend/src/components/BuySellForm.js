@@ -51,13 +51,13 @@ const BuySellForm = (props)=>{
         }
       
         else if(e.target.id === 'buy'){
-          res = await axios.post("http://localhost:3001/sale/buy", targetStock,{withCredentials:true})
+          res = await axios.post(process.env.REACT_APP_BUY_URL, targetStock,{withCredentials:true})
           updatedMessage = { message :`Your purchase of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
-          await axios.post("http://localhost:3001/mail/sale",updatedMessage,{withCredentials:true})
+          
           setSell(true)
         
       }else if(e.target.id === 'sell'){
-        res = await axios.patch("http://localhost:3001/sale/sell", targetStock,{withCredentials:true})
+        res = await axios.patch(process.env.REACT_APP_SELL_URL, targetStock,{withCredentials:true})
         updatedMessage = { message :`Your sale of ${quantity} ${stock} shares was succesful`,class: 'alert alert-success'}
   
 
@@ -92,7 +92,7 @@ const BuySellForm = (props)=>{
 
     const sendEmail = async(message)=>{
       try{
-        await axios.post("http://localhost:3001/mail/sale",message,{withCredentials:true})
+        await axios.post(REACT_APP_MAIL_URL, message, {withCredentials:true})
       }catch(err){
         console.log(err)
       }

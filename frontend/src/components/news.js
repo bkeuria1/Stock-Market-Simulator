@@ -9,13 +9,13 @@ const News = (props)=>{
 
     const getNews = async()=>{
         //check database for news
-        const res = await axios.get(`http://localhost:3001/stock/news?stock=${props.stock}`,{withCredentials:true})
+        const res = await axios.get(`${process.env.REACT_APP_NEWS_URL}?stock=${props.stock}`,{withCredentials:true})
         setArticles(res.data.data)
     }
     return(
         <div>
             {articles?.length>0 &&(
-                <div style = {{overflowY: 'scroll', height: '800px'}}>
+                <div style = {{overflowY: 'scroll', height: '40rem'}}>
                 {articles.map(article=>(
                     <Card style = {{margin : "2rem", padding: "4rem", justifyContent:'center'}}>
                         <Card.Title>{article.title}</Card.Title>

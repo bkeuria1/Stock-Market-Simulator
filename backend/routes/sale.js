@@ -34,6 +34,7 @@ router.post('/buy', ensureAuth,async(req,res)=>{
     await user.save()
     res.status(200).send("Purchase is Completed")
   }catch(err){
+    console.log(err)
     res.status(400).send("There was an error with your purchase")
   }
   

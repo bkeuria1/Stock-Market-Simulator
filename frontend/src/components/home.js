@@ -25,7 +25,7 @@ const Home = ()=>{
 
     async function checkLogin(){
         console.log(signInURL)
-        const result = await axios.get( loggedInURL,  {withCredentials:true})
+        const result = await axios.get( process.env.REACT_APP_LOGGEDIN_URL,  {withCredentials:true})
         console.log(loggedInURL)
         if(result.data.result){
           setLoggedIn(true)
@@ -43,7 +43,7 @@ const Home = ()=>{
         <Card style = {{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh', width: '100%'}}>
             <h1>Welcome to the Stock Market Application!</h1>
             <h2>Please sign in to continue</h2>    
-            <Button href = {signInURL} variant = "primary">Sign in</Button>
+            <Button href = {process.env.REACT_APP_SIGN_IN_URL} variant = "primary">Sign in</Button>
         </Card>
         }
         

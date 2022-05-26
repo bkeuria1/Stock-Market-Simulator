@@ -28,7 +28,7 @@ const SearchForm = (props)=>{
     }
 
     const getSuggestions = async()=>{
-        const results = await axios.get(`http://localhost:3001/stock/autocomplete?query=${query}`,{withCredentials:true})
+        const results = await axios.get(`${process.env.REACT_APP_REALTIME_URL}?query=${query}`,{withCredentials:true})
         setSuggestions(results.data)
     }
 

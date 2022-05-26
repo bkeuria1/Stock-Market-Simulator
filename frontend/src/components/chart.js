@@ -77,7 +77,7 @@ const Chart = (props) =>{
         }
     }
     const getCurrentPrice = async()=>{
-          const res = await axios.get(`http://localhost:3001/stock/realtimePrice?stock=${stock}`,{withCredentials:true})
+          const res = await axios.get(`${process.env.REACT_APP_REALTIME_URL}?stock=${stock}`,{withCredentials:true})
           setCurrentPrice(res.data.data[0].attributes.last)
           setCompanyName(res.data.data[0].attributes.name)
     }
@@ -94,7 +94,7 @@ const Chart = (props) =>{
     async function getStockData(){
         let response
         try{
-            response = await axios.get(`http://localhost:3001/stock/chart?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
+            response = await axios.get(`${process.env.REACT_APP_CHART_URL}?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
             setData(response.data)
         }catch(err){
             console.log(err)
