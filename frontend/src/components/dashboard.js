@@ -10,40 +10,6 @@ const Dashboard = (props)=>{
     const [loggedIn, setLoggedIn] = useState(false)
     const [buyingPower,setBuyingPower] = useState(0)
     const [userStocks,setUserStocks] = useState([])
-    //const [signOutUrl, setSignOutUrl] = useState('')
-    //const buyingPowerContext = [buyingPower,setBuyingPower]
-    // const userStocksContext = [userStocks,setUserStocks]
-    // let loggedInURL
-    // let userStocksURL
-    // let buyingPowerURL
-    // let logoutURL
-    // let signInURL
-
-    // useEffect(()=>{
-    //     console.log("HEY THERE DAWG")
-    //     if(process.env.REACT_APP_MODE === 'dev'){
-    //         console.log("IN Dev mode")
-    //         loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_DEV
-    //         userStocksURL = process.env.REACT_APP_USERSTOCK_URL_DEV
-    //         buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_DEV
-    //         setSignOutUrl(process.env.REACT_APP_SIGN_OUT_URL_DEV)
-    //         signInURL = process.env.REACT_APP_SIGN_IN_URL_DEV
-    
-    //     } else if(process.env.REACT_APP_MODE === 'prod'){
-    //         console.log("in prod mode")
-    //         loggedInURL = process.env.REACT_APP_LOGGEDIN_URL_PROD
-    //         userStocksURL = process.env.REACT_APP_USERSTOCK_URL_PROD
-    //         buyingPowerURL = process.env.REACT_APP_BUYING_POWER_URL_PROD
-    //         setSignOutUrl(process.env.REACT_APP_SIGN_OUT_URL_PROD)
-    //         signInURL = process.env.REACT_APP_SIGN_IN_URL_PROD
-            
-    
-    //     }
-    //     console.log(logoutURL+" is the logout url")
-
-    // },[])
-
-
     useEffect(()=>{
         getBuyingPower()
     },[])
@@ -54,8 +20,6 @@ const Dashboard = (props)=>{
     },[])
       
     useEffect (()=>{
-        console.log("use effect in dashboard called")
-    
         checkLogin()
     },[loggedIn])
     
@@ -81,7 +45,6 @@ const Dashboard = (props)=>{
 
     const getUserStocks = async()=>{
         const res = await axios.get(process.env.REACT_APP_USERSTOCK_URL,{withCredentials:true})
-        console.log("User stocks called")
         setUserStocks(res.data)
     }
 
@@ -99,14 +62,6 @@ const Dashboard = (props)=>{
                         </UserStocksContext.Provider> 
                     </BuyingPowerContext.Provider>   
                 </div>
-                {/* :
-                <div>
-                <h1>You need to be logged in to access the dashboard</h1>
-                <a href = {signInURL} class = "btn btn-primary">Sign in</a> 
-                </div> */}
-            {/* //} */}
-       
-
         </div>
     )
 

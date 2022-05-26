@@ -18,12 +18,6 @@ const SummaryTable = (props)=>{
     const SECOND = 1000
     const MINUTES = SECOND * 60
 
-    // let realTimePriceURL
-    // if(process.env.REACT_APP_MODE === 'dev'){
-    //     realTimePriceURL = process.env.REACT_APP_REALTIME_URL_DEV
-    // }else{
-    //     realTimePriceURL = process.env.REACT_APP_REALTIME_URL_PROD
-    // }
     //refresh table every 10 minutes
     // useEffect(()=>{
     //     const timeId = setTimeout(() => {
@@ -120,7 +114,6 @@ const SummaryTable = (props)=>{
           
             {stockWithPrices.length>0 && (
                 <div style = {{marginTop: '2rem', overflowY: 'scroll', height: "20rem"}}> 
-                {/* style = {{marginTop: '2rem', overflowY: 'scroll', }} */}
                     <Table  bordered hover>
                         <tr>
                             <th>Symbol</th>
@@ -136,8 +129,8 @@ const SummaryTable = (props)=>{
                                             <tr onClick={()=>props.setStock(stock.ticker)}>
                                                 <td>{stock.ticker.toUpperCase()}</td>
                                                 <td>{stock.quantity}</td>
-                                                <td>${stock.total}</td>
-                                                <td>${(stock.total/stock.quantity)}</td>
+                                                <td>${(stock.total + stock.price*stock.quantity).toFixed(2)}</td>
+                                                <td>${(stock.total/stock.quantity).toFixed(2)}</td>
                                                 <td>{stock.price}</td>
                                                 <td style ={{color: stock.price*stock.quantity-stock.total>0 ? 'green' : 'red'}}>${(stock.price*stock.quantity-stock.total).toFixed(2)}</td>
                                             </tr>
