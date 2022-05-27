@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
     default: 1000000
   },
   balance:{
-    type: Number
+    type: [{date: Date, amount: Number}]
   },
   createdAt: {
     type: Date,

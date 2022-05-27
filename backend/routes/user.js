@@ -31,6 +31,30 @@ router.get('/reset',ensureAuth,async(req,res)=>{
     }
 })
 
+router.get('/balance',ensureAuth,async(req,res)=>{
+    try{
+        const balance = req.user.balance
+        return res.send({buyingPower:buyingPower})
+    }catch(err){
+        console.log(err)
+        return res.status(400).send()
+    }
+})
+
+router.put('/balance',ensureAuth,async(req,res)=>{
+    try{
+      const date = req.body.date
+      const balance = req.body.balance
+      const userBalance = req.user.balance
+      userBalance.push({date:date, balance:balance})
+      userBalance.save( )
+    }catch(err){
+        console.log(err)
+        return res.status(400).send()
+    }
+})
+
+
 router.delete('/delete',ensureAuth,async(req,res)=>{
     const user = req.user
     console.log(user)
@@ -43,4 +67,5 @@ router.delete('/delete',ensureAuth,async(req,res)=>{
 
 
 })
+
 module.exports = router
