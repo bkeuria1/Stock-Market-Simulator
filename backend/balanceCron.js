@@ -13,7 +13,9 @@ const options = {
 const calculateBalance = async ()=>{
     try{
         const allUsers = await User.find({})
+       
         for(const user of allUsers){
+          
             let totalAssets = 0
             const buyingPower = user.buyingPower
             let userStocks = await Stock.find({user:user})
@@ -54,8 +56,12 @@ const getDate = ()=>{
     return date 
 
 }
-const task = cron.schedule('* * * * *', () => {
-  calculateBalance()
-});
 
+if(process.env.NODE_ENV === 'dev'){
+    const task = cron.schedule('* * * * *', () => {
+        calculateBalance()
+      });
+}else{
+    calculateBalance()
+}
 module.exports = task

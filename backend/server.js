@@ -57,5 +57,8 @@ app.use('/mail',mailRouter)
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static('../frontend/build'))
 }
-task.start()
+if(process.env.NODE_ENV === 'dev'){
+  task.start()
+}
+console.log(process.env.NODE_ENV)
 app.listen(process.env.PORT || 3001)

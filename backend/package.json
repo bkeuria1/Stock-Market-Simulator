@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js",
+    "devStart": "set NODE_ENV=dev && nodemon server.js",
     "build": "npm run build",
-    "start": "node server.js",
+    "start": "set NODE_ENV=dev && node server.js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage"
   },
   "keywords": [],
