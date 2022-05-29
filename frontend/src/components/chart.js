@@ -17,19 +17,23 @@ const Chart = (props) =>{
     const [trend, setTrend] = useState({})
 
     const stock = props.stock
-    useEffect(()=>{
-        if(stock.length>0){
-            getStockData()
-            console.log(stock)
-        }
-    },[stock,timeFrame])
 
     useEffect(()=>{
-        if(stock.length>0 && data !== null){
+        console.log("This use effect is called")
+        if(stock.length>0){
             getCurrentPrice()
         }
     },[stock])
     
+    useEffect(()=>{
+        if(stock.length>0){
+            getStockData()
+            
+            console.log(stock)
+        }
+    },[stock,timeFrame])
+
+  
     useEffect (()=>{
         if(stock.length>0 && data !== null){
             parseData()
