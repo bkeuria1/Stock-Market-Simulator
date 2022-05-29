@@ -12,9 +12,7 @@ const Symbols = require('../models/symbol')
 require('../passport.js')
 
 const {ensureAuth} = require('../middleware/ensureAuth');
-const { rawListeners } = require('../models/stock');
-// const db = process.env.DATABASE_URL
-// const Symbols = db.collection("stockTickers")
+
 const options = {
     headers: {
         'X-API-KEY': process.env.YF_API_KEY
