@@ -5,13 +5,13 @@ import axios from 'axios'
 import BuySellForm from './BuySellForm';
 import { Button, Form, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faRefresh,faArrowUp, faArrowDown} from '@fortawesome/free-solid-svg-icons'
+import {  faRefresh,faArrowUp, faArrowDown, faStopCircle} from '@fortawesome/free-solid-svg-icons'
 
 const Chart = (props) =>{
     const [closingValues, setClosingValues] = useState([])
     const [dates, setDates] = useState([])
     const [currentPrice,setCurrentPrice] = useState(0)
-    const [timeFrame, setTimeFrame] = useState('1D')
+    const [timeFrame, setTimeFrame] = useState('1Y')
     const [data,setData] = useState(null)
     const [companyName,setCompanyName] = useState()
     const [trend, setTrend] = useState({})
@@ -19,25 +19,22 @@ const Chart = (props) =>{
     const stock = props.stock
 
     useEffect(()=>{
-        console.log("This use effect is called")
+        
         if(stock.length>0){
             getCurrentPrice()
         }
     },[stock])
     
     useEffect(()=>{
-        if(stock.length>0){
-            getStockData()
-            
-            console.log(stock)
-        }
+        getStockData()
     },[stock,timeFrame])
 
   
     useEffect (()=>{
-        if(stock.length>0 && data !== null){
+        if(data !== null){
             parseData()
         }
+        
       }, [JSON.stringify(data)])
 
       useEffect(()=>{
@@ -68,18 +65,26 @@ const Chart = (props) =>{
     function parseData(){
         let tempValues = []
         let tempDates  = []
-        let dataAttributes = data.attributes
-        console.log(dataAttributes)
-        if(dataAttributes){
-            Object.keys(dataAttributes).sort().forEach(date=>{      
+        if(stock.length>0){
+            let dataAttributes = data.attributes
+            if(dataAttributes){
+                Object.keys(dataAttributes).sort().forEach(date=>{      
+                    tempDates.push(date)
+                    tempValues.push(dataAttributes[date].close)
+                })
+            }
+        }else{
+            Object.keys(data).sort().forEach(date=>{
+                console.log(data)
                 tempDates.push(date)
-                tempValues.push(dataAttributes[date].close)
+                tempValues.push(date)
             })
-        
+        }
+            
             setClosingValues(tempValues)
             setDates(tempDates)
-        }
     }
+    
     const getCurrentPrice = async()=>{
           const res = await axios.get(`${process.env.REACT_APP_REALTIME_URL}?stock=${stock}`,{withCredentials:true})
           setCurrentPrice(res.data.data[0].attributes.last)
@@ -98,8 +103,15 @@ const Chart = (props) =>{
     async function getStockData(){
         let response
         try{
-            response = await axios.get(`${process.env.REACT_APP_CHART_URL}?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
-            setData(response.data)
+            if(stock.length>0){
+                response = await axios.get(`${process.env.REACT_APP_CHART_URL}?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
+                setData(response.data)
+            }else{
+                console.log("getting user balance")
+                response = await axios.get(`${process.env.REACT_APP_BALANCE_URL}`, {withCredentials:true})
+    
+                setData(response.data)
+            }
         }catch(err){
             console.log(err)
         }
@@ -109,6 +121,7 @@ const Chart = (props) =>{
         e.preventDefault()
         setTimeFrame(e.target.value)
     }
+
     return(
         <div>
             {data !== null ?
@@ -130,18 +143,19 @@ const Chart = (props) =>{
                             </Card.Title>
                         </div>
                         <div style = {{position:'relative', top:'-4rem'}}>
-                            <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
+                        <Form.Select onChange={udpateTimeFrame} style = {{width : '6rem', marginTop: '1rem'}}>
+                                        <option selected value = "1D">1D</option>
+                                        <option value="5D">5D</option>
+                                        <option value="1M">1M</option>
+                                        <option value="3M">3M</option>
+                                        <option value="1Y">1Y</option>
+                                        <option value= "MAX">MAX</option>
+                                    </Form.Select>
+                           
                             {Object.keys(closingValues).length>0 &&
-                            <div >
-                                <Form.Select onChange={udpateTimeFrame} style = {{width : '6rem', marginTop: '1rem'}}>
-                                    <option selected value = "1D">1D</option>
-                                    <option value="5D">5D</option>
-                                    <option value="1M">1M</option>
-                                    <option value="3M">3M</option>
-                                    <option value="1Y">1Y</option>
-                                    <option value= "MAX">MAX</option>
-                                </Form.Select>
-                                <Line  data = {chartData} options = {options}/> 
+                                <div >
+                                    <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
+                                    <Line  data = {chartData} options = {options}/> 
                             </div>
                             
                             }

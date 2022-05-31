@@ -57,12 +57,13 @@ const getDate = ()=>{
 
 }
 
-if(process.env.NODE_ENV === 'dev'){
-    const task = cron.schedule('* * * * *', () => {
-        //module.exports = task
-        //calculateBalance()
-      });
-}else{
-    calculateBalance()
-}
-
+// if(process.env.NODE_ENV === 'dev'){
+//     const task = cron.schedule('* * * * *', () => {
+//         //module.exports = task
+//         //calculateBalance()
+//       });
+// }else{
+//     calculateBalance()
+// }
+//calculateBalance()
+calculateBalance()
