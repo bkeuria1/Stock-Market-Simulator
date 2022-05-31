@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const today = new Date();
+let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 const UserSchema = new mongoose.Schema({
   googleId: {
     type: String,
@@ -27,7 +29,8 @@ const UserSchema = new mongoose.Schema({
     default: 1000000
   },
   balance:{
-    type: [{date: String, balance: Number}]
+    type: [{date: String, balance: Number}],
+    default : [{date: date, balance: 1000000} ]
   },
   createdAt: {
     type: Date,

@@ -19,7 +19,6 @@ const Chart = (props) =>{
     const stock = props.stock
 
     useEffect(()=>{
-        
         if(stock.length>0){
             getCurrentPrice()
         }
@@ -37,18 +36,13 @@ const Chart = (props) =>{
         
       }, [JSON.stringify(data)])
 
-      useEffect(()=>{
-        console.log("Here is the closing values")
-        console.log(closingValues)
+    useEffect(()=>{
         if(closingValues[closingValues.length-1] - closingValues[0]>=0){
             setTrend({icon: faArrowUp, color : "green"})
         }else{
             setTrend({icon: faArrowDown, color : "red" })
         }
-        console.log("The trend is" + trend.icon)
-        console.log("The trend color is" + trend.color)
-
-      },[closingValues])
+    },[closingValues])
 
     const chartData = {
         labels: dates,
@@ -74,17 +68,15 @@ const Chart = (props) =>{
                 })
             }
         }else{
-            Object.keys(data).sort().forEach(date=>{
-                console.log(data)
-                tempDates.push(date)
-                tempValues.push(date)
+            data.sort().forEach(elm=>{
+                tempDates.push(elm.date)
+                tempValues.push(elm.balance)
             })
-        }
-            
-            setClosingValues(tempValues)
-            setDates(tempDates)
+        }  
+        setClosingValues(tempValues)
+        setDates(tempDates)
     }
-    
+
     const getCurrentPrice = async()=>{
           const res = await axios.get(`${process.env.REACT_APP_REALTIME_URL}?stock=${stock}`,{withCredentials:true})
           setCurrentPrice(res.data.data[0].attributes.last)
@@ -107,9 +99,7 @@ const Chart = (props) =>{
                 response = await axios.get(`${process.env.REACT_APP_CHART_URL}?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
                 setData(response.data)
             }else{
-                console.log("getting user balance")
                 response = await axios.get(`${process.env.REACT_APP_BALANCE_URL}`, {withCredentials:true})
-    
                 setData(response.data)
             }
         }catch(err){
