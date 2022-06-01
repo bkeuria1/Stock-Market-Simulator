@@ -1,5 +1,6 @@
 # Stock-Market-Simulator
 https://stock-market-simulator-mernapp.herokuapp.com/
+
 This application uses the MERN stack (MongoDB, Express.js, React.js, Node) that allows users to create a stock market portfolio! Upon creating an account, the user
 has $1,000,000 ( in fake money, of course) to invest in most stocks and ETFS. 
 
