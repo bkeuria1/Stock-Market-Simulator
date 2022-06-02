@@ -34,6 +34,7 @@ const SummaryTable = (props)=>{
         setCurrentPrices([])
         setStockWithPrices([])
         getCurrentPrices()  
+        console.log("here is the buying power "+ buyingPower)
         
     },[JSON.stringify(userStocks)])
 
@@ -46,18 +47,6 @@ const SummaryTable = (props)=>{
     useEffect(()=>{
         getTotals()
     },[JSON.stringify(stockWithPrices)])
-
-
-   const getTotals = ()=>{
-       let tempTotalGains = 0
-       let tempTotalAssets = 0
-       stockWithPrices.forEach(stock=>{
-            tempTotalAssets += (stock.total + (stock.price*stock.quantity-stock.total))
-            tempTotalGains += stock.price*stock.quantity-stock.total
-       })
-       setTotalGains(tempTotalGains)
-       setTotalAssets(tempTotalAssets)
-   }
 
     const getCurrentPrices = async()=>{
         let queryString = ''
@@ -73,7 +62,7 @@ const SummaryTable = (props)=>{
             //     tempPrices.push(Math.random())
             // }
             res.data.data.forEach(stock=>{
-                console.log(stock.attributes.last)
+               
                 tempPrices.push(stock.attributes.last)
             })
             setCurrentPrices(tempPrices)
@@ -88,6 +77,20 @@ const SummaryTable = (props)=>{
           });
           setStockWithPrices(tempStockInfo)
     }
+
+    const getTotals = ()=>{
+        let tempTotalGains = 0
+        let tempTotalAssets = 0
+        stockWithPrices.forEach(stock=>{
+            console.log("The stock and price is " +stock.ticker + " " +stock.price)
+            tempTotalAssets += (stock.total + (stock.price*stock.quantity-stock.total))
+            tempTotalGains += stock.price*stock.quantity-stock.total
+            console.log(tempTotalAssets)
+        })
+        setTotalGains(tempTotalGains)
+        setTotalAssets(tempTotalAssets)
+    }
+ 
     return(
         <div style={{ width: "40%",float: 'right', marginTop: '4.0rem'}}>
             <Button variant = "primary" onClick={getCurrentPrices}>
