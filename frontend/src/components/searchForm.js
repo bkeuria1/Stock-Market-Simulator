@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import Chart from './chart'
-import {Button,Form,Tabs,Tab,Table} from 'react-bootstrap';
+import {Button,Form,Tabs,Tab,Table, InputGroup} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faSearch } from '@fortawesome/free-solid-svg-icons'
+import {  faCircleXmark, faHome, faSearch} from '@fortawesome/free-solid-svg-icons'
 import News from './news';
 const SearchForm = (props)=>{
     const [query, setQuery] = useState('')
@@ -12,13 +12,12 @@ const SearchForm = (props)=>{
     const stock = props.stock
 
     useEffect(()=>{
+        console.log("The query changed")
         if(query.length > 0){
-            setShow(true)
             getSuggestions()
         }else{
             setSuggestions([])
-            setShow(false)
-        }
+        }    
     },[query])
 
     const updateStock = (e)=>{
@@ -34,30 +33,34 @@ const SearchForm = (props)=>{
 
     return(
         <div style ={{float: 'left',width : "50%", padding: "1rem"}}>
-            <Form onSubmit= {updateStock} >
-                <Form.Control type="text" placeholder = "Search for a Stock" onChange={(e)=>{setQuery(e.target.value)}}  value = {query}/>
-                
-                <Button id="search-button" type="submit" variant = "primary">
-                    <FontAwesomeIcon icon = {faSearch}></FontAwesomeIcon>
-                </Button>
+            <Form onSubmit= {updateStock}>
+                <InputGroup>
+                    <InputGroup.Text onClick = {()=>{props.setStock(''); setQuery('')}}>
+                        <FontAwesomeIcon icon= {faHome} />
+                    </InputGroup.Text>
+                    <Form.Control type="text" placeholder = "Search for a Stock" onChange={(e)=>{setQuery(e.target.value)}}  value = {query}></Form.Control>
+                    <InputGroup.Text onClick = {()=>setQuery('')}>
+                        <FontAwesomeIcon icon= {faCircleXmark} />
+                    </InputGroup.Text>
+                    <Button id="search-button" type="submit" variant = "primary">
+                        <FontAwesomeIcon icon= {faSearch} />
+                    </Button>
+                </InputGroup>
             </Form>
-            
-            {suggestions.length>0 &&
-                
+            {suggestions.length>0 && 
                 <div>
-                    {show &&
-                        <Table bordered hover>
-                            <tbody>
-                        {suggestions.map(suggestion=>{
-                            return (
-                                <tr onClick={(e)=>{props.setStock(suggestion.Symbol);setShow(false); setQuery(`${suggestion.Name} ${suggestion.Symbol}`)}}>
-                                <td>{suggestion.Name} {suggestion.Symbol}</td>
-                                </tr>
-                            )
-                        })}
+                    <Table bordered hover>
+                        <tbody>
+                            {suggestions.map(suggestion=>{
+                                return (
+                                    <tr onClick={(e)=>{props.setStock(suggestion.Symbol); setSuggestions([])}}>
+                                    <td>{suggestion.Name} {suggestion.Symbol}</td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
-                        </Table>
-                    }
+                    </Table>
+                    
                 </div>
             }
                 <div>

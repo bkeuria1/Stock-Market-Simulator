@@ -11,7 +11,7 @@ const Chart = (props) =>{
     const [closingValues, setClosingValues] = useState([])
     const [dates, setDates] = useState([])
     const [currentPrice,setCurrentPrice] = useState(0)
-    const [timeFrame, setTimeFrame] = useState('1Y')
+    const [timeFrame, setTimeFrame] = useState('1D')
     const [data,setData] = useState(null)
     const [companyName,setCompanyName] = useState()
     const [trend, setTrend] = useState({})
@@ -21,6 +21,8 @@ const Chart = (props) =>{
     useEffect(()=>{
         if(stock.length>0){
             getCurrentPrice()
+        }else{
+            setCompanyName('')
         }
     },[stock])
     
@@ -121,10 +123,12 @@ const Chart = (props) =>{
                         <Button variant = "primary" onClick={getCurrentPrice} style = {{width: "7rem", height: '2.5rem', marginBottom: '1rem', marginTop: '1rem'}}>
                             Refresh <FontAwesomeIcon icon={faRefresh}></FontAwesomeIcon>
                         </Button>
-                        <div style = {{width: '40%'}}>
-                            <Card.Title>{companyName}</Card.Title>
-                            <Card.Text>Ticker: {stock.toUpperCase()}</Card.Text>
-                        </div>
+                        {stock.length >0 &&
+                            <div style = {{width: '40%'}}>
+                                <Card.Title>{companyName}</Card.Title>
+                                <Card.Text>Ticker: {stock.toUpperCase()}</Card.Text>
+                            </div>
+                        }
                         <div style = {{position:'relative', marginLeft:'30rem', top:'-5rem'}}>
                             <Card.Title>Current price: {currentPrice}</Card.Title>
                             <Card.Title >
@@ -140,14 +144,14 @@ const Chart = (props) =>{
                                         <option value="3M">3M</option>
                                         <option value="1Y">1Y</option>
                                         <option value= "MAX">MAX</option>
-                                    </Form.Select>
-                           
+                                    </Form.Select>  
                             {Object.keys(closingValues).length>0 &&
                                 <div >
-                                    <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
+                                    {stock.length>0 &&
+                                        <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
+                                    }
                                     <Line  data = {chartData} options = {options}/> 
-                            </div>
-                            
+                            </div>   
                             }
                         </div>
                     </Card>
