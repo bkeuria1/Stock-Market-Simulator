@@ -65,7 +65,7 @@ const SearchForm = (props)=>{
             }
                 <div>
                     <Tabs className="mb-3">
-                    <Tab eventKey="Chart" title="Chart">
+                        <Tab eventKey="Chart" title="Chart">
                             <Chart stock = {stock}></Chart>  
                         </Tab>
                         <Tab eventKey="Stock" title= {`${stock} News`}>

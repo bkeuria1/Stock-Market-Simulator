@@ -102,7 +102,25 @@ const Chart = (props) =>{
                 setData(response.data)
             }else{
                 response = await axios.get(`${process.env.REACT_APP_BALANCE_URL}`, {withCredentials:true})
-                setData(response.data)
+                let data = response.data
+                console.log(data.length)
+                switch(timeFrame){
+                    case('1D'):
+                        setData(data)
+                        break
+                    case('5D'):
+                        setData(data.slice(0,5))
+                        break
+                    case('1M'):
+                        setData(data.slice(0,30))
+                        break
+                    case('1Y'):
+                        setData(data.slice(0,365))
+                        break
+                    case('MAX'):
+                        setData(data)
+                        break
+                }
             }
         }catch(err){
             console.log(err)
@@ -151,7 +169,7 @@ const Chart = (props) =>{
                                         <BuySellForm currentPrice = {currentPrice} stock = {stock}></BuySellForm>
                                     }
                                     <Line  data = {chartData} options = {options}/> 
-                            </div>   
+                                </div>   
                             }
                         </div>
                     </Card>
