@@ -103,19 +103,19 @@ const Chart = (props) =>{
             }else{
                 response = await axios.get(`${process.env.REACT_APP_BALANCE_URL}`, {withCredentials:true})
                 let data = response.data
-                console.log(data.length)
+                let length = data.length - 5 
                 switch(timeFrame){
                     case('1D'):
                         setData(data)
                         break
                     case('5D'):
-                        setData(data.slice(0,5))
+                        setData(data.slice(-5))
                         break
                     case('1M'):
-                        setData(data.slice(0,30))
+                        setData(data.slice(-30))
                         break
                     case('1Y'):
-                        setData(data.slice(0,365))
+                        setData(data.slice(-365))
                         break
                     case('MAX'):
                         setData(data)
@@ -156,15 +156,13 @@ const Chart = (props) =>{
                         </div>
                         <div style = {{position:'relative', top:'-4rem'}}>
                         <Form.Select onChange={udpateTimeFrame} style = {{width : '6rem', marginTop: '1rem'}}>
-                                        { stock.length>0 &&
-                                            <option selected value = "1D">1D</option>
-                                        }       
-                                        <option value="5D">5D</option>
-                                        <option value="1M">1M</option>
-                                        <option value="3M">3M</option>
-                                        <option value="1Y">1Y</option>
-                                        <option value= "MAX">MAX</option>
-                                    </Form.Select>  
+                            <option selected value = "1D">1D</option>   
+                            <option value="5D">5D</option>
+                            <option value="1M">1M</option>
+                            <option value="3M">3M</option>
+                            <option value="1Y">1Y</option>
+                            <option value= "MAX">MAX</option>
+                        </Form.Select>  
                             {Object.keys(closingValues).length>0 &&
                                 <div >
                                     {stock.length>0 &&
