@@ -156,7 +156,9 @@ const Chart = (props) =>{
                         </div>
                         <div style = {{position:'relative', top:'-4rem'}}>
                         <Form.Select onChange={udpateTimeFrame} style = {{width : '6rem', marginTop: '1rem'}}>
-                                        <option selected value = "1D">1D</option>
+                                        { stock.length>0 &&
+                                            <option selected value = "1D">1D</option>
+                                        }       
                                         <option value="5D">5D</option>
                                         <option value="1M">1M</option>
                                         <option value="3M">3M</option>
