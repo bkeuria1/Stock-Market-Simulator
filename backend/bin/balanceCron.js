@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const axios = require('axios')
 const cron = require('node-cron');
 const User = require('../models/user')
