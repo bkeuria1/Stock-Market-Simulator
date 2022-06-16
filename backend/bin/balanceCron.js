@@ -1,8 +1,8 @@
-#!/usr/bin/env node
+#!/backend/bin/env node
 const axios = require('axios')
 const cron = require('node-cron');
-const User = require('../backend/models/user')
-const Stock = require('../backend/models/stock')
+const User = require('../models/user')
+const Stock = require('../models/stock')
 const passport = require('passport');
 const options = {
     headers: {
