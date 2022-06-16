@@ -25,7 +25,7 @@ const Chart = (props) =>{
             setCompanyName('')
         }
     },[stock])
-    
+
     useEffect(()=>{
         getStockData()
     },[stock,timeFrame])
@@ -63,6 +63,8 @@ const Chart = (props) =>{
         let tempDates  = []
         if(stock.length>0){
             let dataAttributes = data.attributes
+            console.log("Here are the data attributes")
+            console.log(dataAttributes)
             if(dataAttributes){
                 Object.keys(dataAttributes).sort().forEach(date=>{      
                     tempDates.push(date)
@@ -103,7 +105,8 @@ const Chart = (props) =>{
             }else{
                 response = await axios.get(`${process.env.REACT_APP_BALANCE_URL}`, {withCredentials:true})
                 let data = response.data
-                let length = data.length - 5 
+            
+                console.log(data.length)
                 switch(timeFrame){
                     case('1D'):
                         setData(data)
@@ -113,6 +116,9 @@ const Chart = (props) =>{
                         break
                     case('1M'):
                         setData(data.slice(-30))
+                        break
+                    case('6M'):
+                        setData(data.slice(-180))
                         break
                     case('1Y'):
                         setData(data.slice(-365))
@@ -159,7 +165,7 @@ const Chart = (props) =>{
                             <option selected value = "1D">1D</option>   
                             <option value="5D">5D</option>
                             <option value="1M">1M</option>
-                            <option value="3M">3M</option>
+                            <option value="6M">6M</option>
                             <option value="1Y">1Y</option>
                             <option value= "MAX">MAX</option>
                         </Form.Select>  

@@ -12,6 +12,7 @@ const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
 const stockRouter = require('./routes/stock')
 const mailRouter = require('./routes/mail')
+const balanceCron =  require('./bin/balanceCron.js')
 
 require('./passport')(passport)
 let whitelist = ['http://localhost:3000','https://stock-market-simulator-mernapp.herokuapp.com']
@@ -56,6 +57,7 @@ app.use('/mail',mailRouter)
 
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static('../frontend/build'))
+  balanceCron()
 }
 
 console.log(process.env.NODE_ENV)
