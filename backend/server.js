@@ -57,7 +57,7 @@ app.use('/mail',mailRouter)
 
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static('../frontend/build'))
-  balanceCron()
+  //balanceCron()
 }
 
 console.log(process.env.NODE_ENV)
