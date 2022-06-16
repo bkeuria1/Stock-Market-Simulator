@@ -14,7 +14,6 @@ const calculateBalance = async ()=>{
     console.log("Balance called")
     try{
         const allUsers = await User.find({})
-        console.log("here are all the users"+ allUsers)
         for(const user of allUsers){
             console.log("The user is "+ user.displayName)
             let totalAssets = 0
@@ -32,7 +31,7 @@ const calculateBalance = async ()=>{
                     let stockDB = await Stock.findOne({ticker: ticker, user:user})
 
                     let stockAmount = (stockDB.total + (currentPrice*stockDB.quantity-stockDB.total))
-                    console.log(`Heres the current price for ${stock.id}: ${currentPrice} with quantity of ${stockDB.quantity} and amount ${stockAmount}`)
+                    //console.log(`Heres the current price for ${stock.id}: ${currentPrice} with quantity of ${stockDB.quantity} and amount ${stockAmount}`)
                     totalAssets += stockAmount
                     console.log(totalAssets)
                     
