@@ -7,6 +7,7 @@
     "devStart": "set NODE_ENV=dev && nodemon server.js",
     "build": "npm run build",
     "start": "node server.js",
+    "balanceCron": "set BALANCE_CRON=true && npm install && node server.js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage"
   },
   "keywords": [],
