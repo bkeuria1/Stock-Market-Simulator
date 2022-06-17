@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/bkeuria1/Stock-Market-Simulator#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "dotenv": "^16.0.1"
   }
 }
