@@ -1,6 +1,5 @@
 #!/backend/bin/env node
 const axios = require('axios')
-const cron = require('node-cron');
 const User = require('./backend/models/user')
 const Stock = require('./backend/models/stock')
 const passport = require('passport');
