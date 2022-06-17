@@ -1,8 +1,8 @@
 #!/backend/bin/env node
 const axios = require('axios')
 const cron = require('node-cron');
-const User = require('../models/user')
-const Stock = require('../models/stock')
+const User = require('./backend/models/user')
+const Stock = require('./backend/models/stock')
 const passport = require('passport');
 const options = {
     headers: {
@@ -15,6 +15,7 @@ const calculateBalance = async ()=>{
     console.log("Balance called")
     try{
         const allUsers = await User.find({})
+        console.log(allUsers.length)
         for(const user of allUsers){
             console.log("The user is "+ user.displayName)
             let totalAssets = 0
