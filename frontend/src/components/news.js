@@ -8,7 +8,6 @@ const News = (props)=>{
     },[props.stock])
 
     const getNews = async()=>{
-        //check database for news
         const res = await axios.get(`${process.env.REACT_APP_NEWS_URL}?stock=${props.stock}`,{withCredentials:true})
         setArticles(res.data.data)
     }
@@ -19,7 +18,6 @@ const News = (props)=>{
                     {articles.map(article=>(
                         <Card style = {{margin : "2rem", padding: "4rem", justifyContent:'center'}}>
                             <Card.Title>{article.title}</Card.Title>
-                            <Card.Text>{article.source} {article.published_at}</Card.Text>
                             <Card.Text>Summary: {article.description}</Card.Text>
                             <Card.Link href = {article.url}>Source</Card.Link>
                             <Card.Img src = {article.image_url}></Card.Img>

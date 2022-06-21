@@ -43,9 +43,8 @@ const calculateBalance = async ()=>{
             console.log("Total Assets: " + totalAssets)
             console.log("Current Balance" + currentBalance)
             user.balance.push({date: getDate(), balance: currentBalance})
-            await user.save()
-                                                                               
-        };
+            await user.save()                                                                      
+        }
     
     
     }catch(err){
@@ -60,4 +59,5 @@ const getDate = ()=>{
 
 
 }
-exports.module = calculateBalance()
+module.exports.calculateBalance = calculateBalance()
+
