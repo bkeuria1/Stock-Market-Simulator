@@ -58,7 +58,8 @@ app.use('/mail',mailRouter)
 if(process.env.NODE_ENV === 'production'){
   console.log("Here is the balance_cron   " + process.env.BALANCE_CRON)
   if(process.env.BALANCE_CRON === 'true'){
-    calculateBalance.calculateBalance
+    console.log("Calculate balance ran")
+    calculateBalance()
   }
   app.use(express.static('../frontend/build'))
  

@@ -9,7 +9,7 @@ const options = {
     }
 }
 
-const calculateBalance = async ()=>{
+module.exports = async function(){
 
     console.log("Balance called")
     try{
@@ -58,6 +58,6 @@ const getDate = ()=>{
     return date 
 
 
-}
-module.exports.calculateBalance = calculateBalance()
+} 
+
 
