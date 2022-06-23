@@ -101,12 +101,12 @@ const Chart = (props) =>{
         try{
             if(stock.length>0){
                 response = await axios.get(`${process.env.REACT_APP_CHART_URL}?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
+                console.log(response.data.length)
                 setData(response.data)
             }else{
                 response = await axios.get(`${process.env.REACT_APP_BALANCE_URL}`, {withCredentials:true})
-                let data = response.data
-            
-                console.log(data.length)
+                let data = response.data 
+
                 switch(timeFrame){
                     case('1D'):
                         setData(data)
