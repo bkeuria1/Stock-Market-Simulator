@@ -59,7 +59,7 @@ if(process.env.NODE_ENV === 'production'){
   console.log("Here is the balance_cron   " + process.env.BALANCE_CRON)
   if(process.env.BALANCE_CRON === 'true'){
     console.log("Calculate balance ran")
-    calculateBalance()
+    //calculateBalance()
   }else{
     console.log("Balance cron didn't run")
   }

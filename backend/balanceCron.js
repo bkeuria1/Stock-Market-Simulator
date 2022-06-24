@@ -8,8 +8,11 @@ const options = {
         'X-API-KEY': process.env.YF_API_KEY
     }
 }
+function hello(){
+    console.log("hello")
+}
 
-module.exports = async function(){
+async function calculateBalance(){
 
     console.log("Balance called")
     try{
@@ -59,5 +62,9 @@ const getDate = ()=>{
 
 
 } 
+
+hello()
+
+
 
 
