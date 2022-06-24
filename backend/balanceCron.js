@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 const axios = require('axios')
 const User = require('./models/user')
 const Stock = require('./models/stock')
@@ -13,10 +13,23 @@ function hello(){
 }
 
 async function calculateBalance(){
+    const mongoose = require('mongoose')
+    mongoose.connect(process.env.DATABASE_URL, 
+    { useNewUrlParser: true,
+    useUnifiedTopology: true,
+    autoIndex:true
+    
+    })
+    const db = mongoose.connection
+    db.on('error', error => console.error(error))
+    db.once('open', () => console.log('Connected to Mongoose'))
 
     console.log("Balance called")
     try{
+        console.log("Balance called 2")
         const allUsers = await User.find({})
+        console.log(allUsers.length)
+    
         console.log(allUsers.length)
         for(const user of allUsers){
             console.log("The user is "+ user.displayName)
@@ -48,11 +61,13 @@ async function calculateBalance(){
             user.balance.push({date: getDate(), balance: currentBalance})
             await user.save()                                                                      
         }
+        
     
     
     }catch(err){
         console.log(err)
     }
+    console.log("hey")
     process.exit()
 
 }
