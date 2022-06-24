@@ -60,6 +60,8 @@ if(process.env.NODE_ENV === 'production'){
   if(process.env.BALANCE_CRON === 'true'){
     console.log("Calculate balance ran")
     calculateBalance()
+  }else{
+    console.log("Balance cron didn't run")
   }
   app.use(express.static('../frontend/build'))
  
