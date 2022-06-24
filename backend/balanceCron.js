@@ -53,6 +53,8 @@ async function calculateBalance(){
     }catch(err){
         console.log(err)
     }
+    process.exit()
+
 }
 
 const getDate = ()=>{
@@ -63,7 +65,7 @@ const getDate = ()=>{
 
 } 
 
-hello()
+calculateBalance()
 
 
 
