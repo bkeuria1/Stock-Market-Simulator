@@ -35,7 +35,6 @@ const BuySellForm = (props)=>{
     },[show])
 
     const buyStock = async (e)=>{
-      console.log(e.target.id)
       e.preventDefault()
       const targetStock = {
         ticker: stock,
@@ -83,7 +82,6 @@ const BuySellForm = (props)=>{
     }
 
     const ownsStock = async()=>{
-      console.log(userStocks)
       if(userStocks.length>0){
         const found = userStocks.some(el => el.ticker === stock)
         if(found)setSell(true)

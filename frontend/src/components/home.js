@@ -9,7 +9,6 @@ const Home = ()=>{
     const [loggedIn,setLoggedIn] = useState(false)
 
     useEffect(()=>{
-        console.log("Use Effect being called")
         checkLogin()
     },[loggedIn])
 
@@ -24,9 +23,7 @@ const Home = ()=>{
     }
 
     async function checkLogin(){
-        console.log(signInURL)
         const result = await axios.get( process.env.REACT_APP_LOGGEDIN_URL,  {withCredentials:true})
-        console.log(loggedInURL)
         if(result.data.result){
           setLoggedIn(true)
         }else{

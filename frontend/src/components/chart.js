@@ -63,8 +63,6 @@ const Chart = (props) =>{
         let tempDates  = []
         if(stock.length>0){
             let dataAttributes = data.attributes
-            console.log("Here are the data attributes")
-            console.log(dataAttributes)
             if(dataAttributes){
                 Object.keys(dataAttributes).sort().forEach(date=>{      
                     tempDates.push(date)
@@ -101,7 +99,6 @@ const Chart = (props) =>{
         try{
             if(stock.length>0){
                 response = await axios.get(`${process.env.REACT_APP_CHART_URL}?stock=${stock}&timeFrame=${timeFrame}`, {withCredentials:true})
-                console.log(response.data.length)
                 setData(response.data)
             }else{
                 response = await axios.get(`${process.env.REACT_APP_BALANCE_URL}`, {withCredentials:true})

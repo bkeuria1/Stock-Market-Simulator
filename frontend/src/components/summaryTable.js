@@ -4,11 +4,10 @@ import './table.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { UserStocksContext } from '../context/userStocksContext'
 import {  faRefresh } from '@fortawesome/free-solid-svg-icons'
-import {Button,Table,Card} from 'react-bootstrap';
+import {Button,Table,Card,Tabs,Tab} from 'react-bootstrap';
 import { BuyingPowerContext } from '../context/buyingPowerContext'
-
+import AssetPieChart from './assetPieChart'
 const SummaryTable = (props)=>{
-    //const [userStocks,setUserStocks] = useState([])
     const [currentPrices,setCurrentPrices] = useState([])
     const [stockWithPrices, setStockWithPrices] = useState([])
     const [totalGains,setTotalGains] = useState(0)
@@ -18,24 +17,11 @@ const SummaryTable = (props)=>{
     const SECOND = 1000
     const MINUTES = SECOND * 60
 
-    //refresh table every 10 minutes
-    // useEffect(()=>{
-    //     const timeId = setTimeout(() => {
-    //       // After 3 seconds set the show value to false
-    //       getCurrentPrices()
-    //     }, MINUTES * 10)
-  
-    //     return () => {
-    //       clearTimeout(timeId)
-    //     }
-    //  })
 
     useEffect(()=>{
         setCurrentPrices([])
         setStockWithPrices([])
-        getCurrentPrices()  
-        console.log("here is the buying power "+ buyingPower)
-        
+        getCurrentPrices()   
     },[JSON.stringify(userStocks)])
 
     useEffect(()=>{
@@ -82,10 +68,8 @@ const SummaryTable = (props)=>{
         let tempTotalGains = 0
         let tempTotalAssets = 0
         stockWithPrices.forEach(stock=>{
-            console.log("The stock and price is " +stock.ticker + " " +stock.price)
             tempTotalAssets += (stock.total + (stock.price*stock.quantity-stock.total))
             tempTotalGains += stock.price*stock.quantity-stock.total
-            console.log(tempTotalAssets)
         })
         setTotalGains(tempTotalGains)
         setTotalAssets(tempTotalAssets)
@@ -116,7 +100,10 @@ const SummaryTable = (props)=>{
             </Card>
           
             {stockWithPrices.length>0 && (
-                <div style = {{marginTop: '2rem', overflowY: 'scroll', height: "20rem"}}> 
+                <div>
+                <Tabs className="mb-3">
+                    <Tab eventKey="Table" title="Table">
+                    <div style = {{marginTop: '2rem', overflowY: 'scroll', height: "20rem"}}> 
                     <Table  bordered hover>
                         <tr>
                             <th>Symbol</th>
@@ -143,8 +130,19 @@ const SummaryTable = (props)=>{
                             </tbody>
                     </Table>
                 </div>
+                       
+                    </Tab>
+                    <Tab eventKey="Chart" title = "Chart" >
+                        <AssetPieChart style={{height :'1rem'}} totalAssets = {totalAssets} stockWithPrices = {stockWithPrices}/>
+                    </Tab>
+                </Tabs>   
+            
+
+                </div>
             )
+           
             }
+            
 
         </div>
     )

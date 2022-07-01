@@ -12,7 +12,6 @@ const SearchForm = (props)=>{
     const stock = props.stock
 
     useEffect(()=>{
-        console.log("The query changed")
         if(query.length > 0){
             getSuggestions()
         }else{
