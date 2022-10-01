@@ -17,6 +17,6 @@ cd front
 npm run start
 
 
-# ScreenShots
+# Screen Shots
 ![screenshot1Mern](https://user-images.githubusercontent.com/41266777/169672584-403528aa-2171-4600-a174-6d93c101fb41.png)
 ![screenshot1Mern](https://user-images.githubusercontent.com/41266777/169672601-d42248d0-281e-4aef-83d5-979e276786aa.png)
